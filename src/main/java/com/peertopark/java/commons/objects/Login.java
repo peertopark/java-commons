@@ -16,10 +16,10 @@
 package com.peertopark.java.commons.objects;
 
 import com.peertopark.java.commons.interfaces.LoginInterface;
+import com.peertopark.java.commons.utils.Base64;
 import es.blackleg.java.utilities.Numbers;
 import es.blackleg.java.utilities.Objects;
 import es.blackleg.java.utilities.Strings;
-import java.util.Base64;
 
 /**
  *
@@ -116,8 +116,7 @@ public class Login implements LoginInterface {
     }
     
     private String decodeBasicAuthString(String basicAuth) {
-        byte[] decodedBytes = Base64.getDecoder().decode(basicAuth);
-        return new String(decodedBytes);
+        return Base64.decode(basicAuth);
     }
     
     private String[] splitDecodedString(String decodedString) {
@@ -154,7 +153,7 @@ public class Login implements LoginInterface {
     
     private String encodeAuthString(String authString) {
         if (Objects.nonNull(authString)) {
-            return Base64.getEncoder().encodeToString(authString.getBytes());
+            return Base64.encode(authString);
         } else {
             return "";
         }
