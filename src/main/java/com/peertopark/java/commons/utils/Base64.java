@@ -29,10 +29,10 @@ public class Base64 {
     public static String encode(String string) {
         if (Objects.isNull(string)) {
             return null;
-        } else if (!SystemUtils.isJavaVersionAtLeast(JavaVersion.JAVA_1_8)) {
-            return DatatypeConverter.printBase64Binary(string.getBytes());
-        } else {
+        } else if (SystemUtils.isJavaVersionAtLeast(JavaVersion.JAVA_1_8)) {
             return java.util.Base64.getEncoder().encodeToString(string.getBytes());
+        } else {
+            return DatatypeConverter.printBase64Binary(string.getBytes());
         }
     }
     
@@ -40,10 +40,10 @@ public class Base64 {
         byte[] decoded;
         if (Objects.isNull(string)) {
             return null;
-        } else if (!SystemUtils.isJavaVersionAtLeast(JavaVersion.JAVA_1_8)) {
-            decoded = DatatypeConverter.parseBase64Binary(string);
-        } else {
+        } else if (SystemUtils.isJavaVersionAtLeast(JavaVersion.JAVA_1_8)) {
             decoded = java.util.Base64.getDecoder().decode(string);
+        } else {
+            decoded = DatatypeConverter.parseBase64Binary(string);
         }
         return new String(decoded);
     }
