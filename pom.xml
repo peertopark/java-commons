@@ -3,13 +3,13 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.peertopark.java</groupId>
     <artifactId>parent</artifactId>
-    <version>3.0.0</version>
+    <version>3.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>${project.groupId}.${project.artifactId}</name>
     <scm>
         <connection>scm:git:git@github.com:peertopark/java-commons.git</connection>
         <developerConnection>scm:git:git@github.com:peertopark/java-commons.git</developerConnection>
-        <tag>parent-3.0.0</tag>
+        <tag>HEAD</tag>
     </scm>
     <organization>
         <name>Peer to Park</name>
