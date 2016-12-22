@@ -82,4 +82,11 @@ public class ValidatorTest {
         assertTrue(Validator.validateEmail(email));
     }
     
+    @Test
+    public void testStringLength() {
+        assertTrue(Validator.stringLength("123456", 3, 6));
+        assertTrue(Validator.stringLength("1234567", 6, 7));
+        assertFalse(Validator.stringLength("12345", 6, 10));
+    }
+    
 }

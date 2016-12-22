@@ -6,6 +6,11 @@
     <version>3.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>${project.groupId}.${project.artifactId}</name>
+    <scm>
+        <connection>scm:git@github.com:peertopark/java-commons.git</connection>
+        <developerConnection>scm:git@github.com:peertopark/java-commons.git</developerConnection>
+        <tag>HEAD</tag>
+    </scm>
     <organization>
         <name>Peer to Park</name>
         <url>https://www.peertopark.com</url>
@@ -21,5 +26,59 @@
     <modules>
         <module>commons</module>
         <module>validators</module>
+        <module>restclient</module>
+        <module>phoneutils</module>
     </modules>
+    <distributionManagement>
+        <snapshotRepository>
+            <id>maven.peertopark.com</id>
+            <url>s3://maven.peertopark.com</url>
+        </snapshotRepository>
+        <repository>
+            <id>maven.peertopark.com</id>
+            <url>s3://maven.peertopark.com</url>
+        </repository>
+    </distributionManagement>
+    <build>
+        <extensions>
+            <extension>
+                <groupId>org.kuali.maven.wagons</groupId>
+                <artifactId>maven-s3-wagon</artifactId>
+                <version>1.2.1</version>
+            </extension>
+        </extensions>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.5.3</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.10.4</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.0.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>

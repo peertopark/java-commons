@@ -63,4 +63,8 @@ public class Validator {
         return getEmailValidator().isValid(email); 
     }
     
+    public static boolean stringLength(String string, int minLength, int maxLength) {
+        return stringMinLength(string, minLength) && stringMaxLength(string, maxLength);
+    }
+    
 }
