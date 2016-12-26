@@ -9,6 +9,8 @@
     <artifactId>restclient</artifactId>
     <packaging>jar</packaging>
     <name>${project.groupId}.${project.artifactId}</name>
+    <description>Peer to Park Java Rest Client package</description>
+    <url>https://www.peertopark.com/</url>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.6</maven.compiler.source>

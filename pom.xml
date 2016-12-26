@@ -6,6 +6,8 @@
     <version>3.0.2-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>${project.groupId}.${project.artifactId}</name>
+    <description>Peer to Park Java Open Source parent package</description>
+    <url>https://www.peertopark.com/</url>
     <scm>
         <connection>scm:git:git@github.com:peertopark/java-commons.git</connection>
         <developerConnection>scm:git:git@github.com:peertopark/java-commons.git</developerConnection>
@@ -15,6 +17,14 @@
         <name>Peer to Park</name>
         <url>https://www.peertopark.com</url>
     </organization>
+    <developers>
+        <developer>
+            <name>Blackleg</name>
+            <email>hectorespertpardo@gmail.com</email>
+            <organization>Blackleg</organization>
+            <organizationUrl>http://www.blackleg.es</organizationUrl>
+        </developer>
+    </developers>
     <licenses>
         <license>
             <name>Apache License, Version 2.0</name>
