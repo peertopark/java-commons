@@ -3,15 +3,15 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.peertopark.java</groupId>
     <artifactId>parent</artifactId>
-    <version>3.0.3</version>
+    <version>3.0.4</version>
     <packaging>pom</packaging>
     <name>${project.groupId}.${project.artifactId}</name>
     <description>Peer to Park Java Open Source parent package</description>
     <url>https://www.peertopark.com/</url>
     <scm>
-        <connection>scm:git:git@github.com:peertopark/java-commons.git</connection>
-        <developerConnection>scm:git:git@github.com:peertopark/java-commons.git</developerConnection>
-        <tag>HEAD</tag>
+        <connection>scm:git:git://github.com/peertopark/java-commons.git</connection>
+        <developerConnection>scm:git:ssh://github.com:peertopark/java-commons.git</developerConnection>
+        <url>https://github.com/peertopark/java-commons</url>
     </scm>
     <organization>
         <name>Peer to Park</name>
