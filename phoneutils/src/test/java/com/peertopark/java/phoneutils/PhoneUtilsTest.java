@@ -51,6 +51,8 @@ public class PhoneUtilsTest {
     @Test
     public void testFormatWithCode() {
         String expected = "34630627272";
+        
+        fail();
 
         String phone = PhoneUtils.formatWithCode("630627272", "ES");
         assertNotNull(phone);
