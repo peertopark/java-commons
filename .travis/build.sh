@@ -7,3 +7,4 @@ if isSignable; then
 else
 	mvn install
 fi
+exit $?
