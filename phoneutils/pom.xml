@@ -4,23 +4,13 @@
     <parent>
         <groupId>com.peertopark.java</groupId>
         <artifactId>parent</artifactId>
-        <version>3.0.1</version>
+        <version>3.0.2</version>
     </parent>
     <artifactId>phoneutils</artifactId>
     <packaging>jar</packaging>
     <name>${project.groupId}.${project.artifactId}</name>
-    <organization>
-        <name>Peer to Park</name>
-        <url>https://www.peertopark.com</url>
-    </organization>
-    <licenses>
-        <license>
-            <name>Apache License, Version 2.0</name>
-            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
-            <distribution>repo</distribution>
-            <comments>A business-friendly OSS license</comments>
-        </license>
-    </licenses>
+    <description>Peer to Park Java Phone Utils package</description>
+    <url>https://www.peertopark.com/</url>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.6</maven.compiler.source>
