@@ -9,9 +9,9 @@
     <description>Peer to Park Java Open Source parent package</description>
     <url>https://www.peertopark.com/</url>
     <scm>
-        <connection>scm:git:git@github.com:peertopark/java-commons.git</connection>
-        <developerConnection>scm:git:git@github.com:peertopark/java-commons.git</developerConnection>
-        <tag>HEAD</tag>
+        <connection>scm:git:git://github.com/peertopark/java-commons.git</connection>
+        <developerConnection>scm:git:ssh://github.com:peertopark/java-commons.git</developerConnection>
+        <url>https://github.com/peertopark/java-commons</url>
     </scm>
     <organization>
         <name>Peer to Park</name>
