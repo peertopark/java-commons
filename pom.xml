@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.peertopark.java</groupId>
     <artifactId>parent</artifactId>
-    <version>3.0.3-SNAPSHOT</version>
+    <version>3.0.3</version>
     <packaging>pom</packaging>
     <name>${project.groupId}.${project.artifactId}</name>
     <description>Peer to Park Java Open Source parent package</description>
