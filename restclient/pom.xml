@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.peertopark.java</groupId>
         <artifactId>parent</artifactId>
-        <version>3.0.1-SNAPSHOT</version>
+        <version>3.0.1</version>
     </parent>
     <artifactId>restclient</artifactId>
     <packaging>jar</packaging>
