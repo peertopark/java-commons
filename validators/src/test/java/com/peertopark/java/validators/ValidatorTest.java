@@ -13,8 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.peertopark.commons.validators;
+package com.peertopark.java.validators;
 
+import com.peertopark.java.validators.Validator;
 import org.apache.commons.validator.routines.RegexValidator;
 import org.junit.After;
 import org.junit.AfterClass;

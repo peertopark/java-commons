@@ -13,10 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.peertopark.java.commons.utils;
+package com.peertopark.java.commons.utilities;
 
-import com.peertopark.java.commons.utilities.Persistence;
-import java.util.Map;
+import com.peertopark.java.commons.utilities.Base64;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -28,9 +27,9 @@ import static org.junit.Assert.*;
  *
  * @author Hector Espert
  */
-public class PersistenceTest {
+public class Base64Test {
     
-    public PersistenceTest() {
+    public Base64Test() {
     }
     
     @BeforeClass
@@ -50,18 +49,27 @@ public class PersistenceTest {
     }
 
     /**
-     * Test of makeBasicProperties method, of class Persistence.
+     * Test of encode method, of class Base64.
      */
     @Test
-    public void testMakeBasicProperties() {
-        String url = "URL";
-        String user = "USER";
-        String password = "PASSWORD";
-        Map result = Persistence.makeBasicProperties(url, user, password);
+    public void testEncode() {
+        String string = "manuela:1234";
+        String expResult = "bWFudWVsYToxMjM0";
+        String result = Base64.encode(string);
         assertNotNull(result);
-        String resultUrl = (String) result.get(Persistence.URL);
-        assertNotNull(resultUrl);
-        assertEquals(url, resultUrl);
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of decode method, of class Base64.
+     */
+    @Test
+    public void testDecode() {
+        String string = "bWFudWVsYToxMjM0";
+        String expResult = "manuela:1234";
+        String result = Base64.decode(string);
+        assertNotNull(result);
+        assertEquals(expResult, result);
     }
     
 }
