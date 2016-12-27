@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.peertopark.commons.validators;
+package com.peertopark.java.validators;
 
 import es.blackleg.java.utilities.Objects;
 import org.apache.commons.validator.routines.DateValidator;
