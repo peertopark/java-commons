@@ -19,6 +19,7 @@ import es.blackleg.java.utilities.Objects;
 import org.apache.commons.validator.routines.DateValidator;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.apache.commons.validator.routines.RegexValidator;
+import org.apache.commons.validator.routines.UrlValidator;
 
 
 /**
@@ -26,6 +27,8 @@ import org.apache.commons.validator.routines.RegexValidator;
  * @author Hector Espert
  */
 public class Validator {
+    
+    public static final String ALFANUMERICSPACEREGEX = "^[a-zA-Z0-9 ]+$";
     
     public static RegexValidator getRegexValidator(String pattern) {
         return new RegexValidator(pattern, true);
@@ -65,6 +68,20 @@ public class Validator {
     
     public static boolean stringLength(String string, int minLength, int maxLength) {
         return stringMinLength(string, minLength) && stringMaxLength(string, maxLength);
+    }
+    
+    public static boolean onlyAlfaNumericOrSpace(String alfaNumeric) {
+        return validateStringWithPattern(alfaNumeric, ALFANUMERICSPACEREGEX);
+    }
+    
+    /**
+     * Valdiate a URl
+     * @param url
+     * @return true is valid url
+     */
+    public static boolean validateUrl(String url) {
+        UrlValidator urlValidator = UrlValidator.getInstance();
+        return urlValidator.isValid(url);
     }
     
 }

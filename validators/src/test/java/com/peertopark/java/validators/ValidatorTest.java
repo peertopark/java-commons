@@ -15,7 +15,6 @@
  */
 package com.peertopark.java.validators;
 
-import com.peertopark.java.validators.Validator;
 import org.apache.commons.validator.routines.RegexValidator;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -88,6 +87,22 @@ public class ValidatorTest {
         assertTrue(Validator.stringLength("123456", 3, 6));
         assertTrue(Validator.stringLength("1234567", 6, 7));
         assertFalse(Validator.stringLength("12345", 6, 10));
+    }
+    
+    @Test
+    public void testOnlyAlfaNumericOrSpace() {
+        assertTrue(Validator.onlyAlfaNumericOrSpace("12asdAB"));
+        assertTrue(Validator.onlyAlfaNumericOrSpace("12as dA B"));
+        assertFalse(Validator.onlyAlfaNumericOrSpace("12ás dÑ B"));
+    }
+    
+    /**
+     * Test of validateUrl method, of class Validator.
+     */
+    @Test
+    public void testValidateUrl() {
+        String url = "http://www.peertopark.com";
+        assertTrue(Validator.validateUrl(url));
     }
     
 }
