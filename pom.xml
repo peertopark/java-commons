@@ -38,6 +38,7 @@
         <module>validators</module>
         <module>restclient</module>
         <module>phoneutils</module>
+        <module>dates</module>
     </modules>
     <distributionManagement>
         <snapshotRepository>

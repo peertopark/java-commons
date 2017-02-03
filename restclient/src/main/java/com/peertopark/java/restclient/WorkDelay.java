@@ -5,8 +5,9 @@
  */
 package com.peertopark.java.restclient;
 
-import es.blackleg.java.utilities.Numbers;
-import es.blackleg.java.utilities.RandomMaker;
+import com.peertopark.java.commons.utilities.Numbers;
+import com.peertopark.java.commons.utilities.RandomMaker;
+
 
 /**
  *

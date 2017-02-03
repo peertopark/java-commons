@@ -15,11 +15,11 @@
  */
 package com.peertopark.java.commons.objects;
 
+import com.peertopark.java.commons.utilities.Numbers;
+import com.peertopark.java.commons.utilities.Strings;
+import com.peertopark.java.commons.utilities.Objects;
 import com.peertopark.java.commons.interfaces.LoginInterface;
 import com.peertopark.java.commons.utilities.Base64;
-import es.blackleg.java.utilities.Numbers;
-import es.blackleg.java.utilities.Objects;
-import es.blackleg.java.utilities.Strings;
 
 /**
  *

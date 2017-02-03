@@ -15,7 +15,6 @@
  */
 package com.peertopark.java.commons.utilities;
 
-import es.blackleg.java.utilities.Objects;
 import javax.xml.bind.DatatypeConverter;
 import org.apache.commons.lang3.JavaVersion;
 import org.apache.commons.lang3.SystemUtils;

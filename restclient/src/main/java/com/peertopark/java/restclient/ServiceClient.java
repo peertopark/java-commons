@@ -5,7 +5,7 @@
  */
 package com.peertopark.java.restclient;
 
-import es.blackleg.java.utilities.Objects;
+import com.peertopark.java.commons.utilities.Objects;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;

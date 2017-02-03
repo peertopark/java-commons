@@ -15,7 +15,7 @@
  */
 package com.peertopark.java.validators;
 
-import es.blackleg.java.utilities.Objects;
+import com.peertopark.java.commons.utilities.Objects;
 import org.apache.commons.validator.routines.DateValidator;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.apache.commons.validator.routines.RegexValidator;
