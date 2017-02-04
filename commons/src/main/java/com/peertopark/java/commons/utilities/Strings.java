@@ -15,32 +15,65 @@
  */
 package com.peertopark.java.commons.utilities;
 
-
 /**
  *
  * @author hector
  */
 public class Strings {
-    
+
     public static final String EMPTY = "";
-    
+
     /**
      * Check if string is null or empty
+     *
      * @param string The string
      * @return boolean
      */
     public static boolean checkIfIsEmptyOrNull(String string) {
         return Objects.isNull(string) || string.isEmpty();
- 
+
     }
 
     /**
      * Check if string is not null and not empty
+     *
      * @param string The string
      * @return boolean
      */
     public static boolean checkIfIsNotEmptyOrNull(String string) {
         return !Strings.checkIfIsEmptyOrNull(string);
     }
-    
+
+    public static String capitalize(String string) {
+        if (Strings.checkIfIsEmptyOrNull(string)) {
+            return string;
+        } else {
+            return string.substring(0, 1).toUpperCase() + string.substring(1).toLowerCase();
+        }
+    }
+
+    public static String getFirstLetter(String string) {
+        if (Strings.checkIfIsEmptyOrNull(string)) {
+            return string;
+        } else {
+            return string.substring(0, 1);
+        }
+    }
+
+    public static String getCapitalizeFirstLetter(String string) {
+        if (Strings.checkIfIsEmptyOrNull(string)) {
+            return string;
+        } else {
+            return getFirstLetter(string).toUpperCase();
+        }
+    }
+
+    public static String removeStringInString(String string, String remove) {
+        if (Strings.checkIfIsEmptyOrNull(string)) {
+            return string;
+        } else {
+            return string.replaceAll(remove, EMPTY);
+        }
+    }
+
 }

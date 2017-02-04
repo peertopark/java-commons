@@ -73,4 +73,30 @@ public class StringsTest {
         assertFalse(Strings.checkIfIsNotEmptyOrNull(test));
     }
     
+    
+    @Test
+    public void testCapitalize() {
+        String test = "prueba";
+        String expected = "Prueba";
+        String result = Strings.capitalize(test);
+        assertEquals(expected, result);
+ 
+    }
+    
+    @Test
+    public void testGetFirstLetter() {
+        String test = "prueba";
+        String expected = "p";
+        String result = Strings.getFirstLetter(test);
+        assertEquals(expected, result);
+    }
+    
+    @Test
+    public void testGetCapitalizeFirstLetter() {
+        String test = "prueba";
+        String expected = "P";
+        String result = Strings.getCapitalizeFirstLetter(test);
+        assertEquals(expected, result);
+    }
+    
 }
