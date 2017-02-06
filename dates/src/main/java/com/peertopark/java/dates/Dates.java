@@ -15,15 +15,22 @@
  */
 package com.peertopark.java.dates;
 
+import com.peertopark.java.commons.utilities.Numbers;
 import com.peertopark.java.commons.utilities.Objects;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.time.DateUtils;
 import org.joda.time.DateTime;
+import org.joda.time.Days;
 import org.joda.time.Duration;
+import org.joda.time.DurationFieldType;
 import org.joda.time.Interval;
+import org.joda.time.Months;
+import org.joda.time.Period;
 
 /**
  *
@@ -52,12 +59,12 @@ public class Dates {
     /**
      * New Date
      *
-     * @return
+     * @return {@link Date}
      */
     public static Date now() {
         return new Date();
     }
-    
+
     public static DateTime convert(Date date) {
         if (Objects.isNull(date)) {
             return null;
@@ -65,7 +72,7 @@ public class Dates {
             return new DateTime(date);
         }
     }
-    
+
     public static DateTime convert(long time) {
         return new DateTime(time);
     }
@@ -125,8 +132,7 @@ public class Dates {
     public static boolean allNotNull(Date... dates) {
         return ObjectUtils.allNotNull((Object[]) dates);
     }
-    
-    
+
     /**
      * All dates not null
      *
@@ -140,7 +146,7 @@ public class Dates {
     public static boolean anyNull(Date... dates) {
         return !allNotNull(dates);
     }
-    
+
     public static boolean anyNull(DateTime... dates) {
         return !allNotNull(dates);
     }
@@ -152,7 +158,7 @@ public class Dates {
     public static boolean afterOrEquals(Date dateToCompare, Date date) {
         return afterOrEquals(convert(dateToCompare), convert(date));
     }
-    
+
     public static boolean afterOrEquals(DateTime dateToCompare, DateTime date) {
         if (allNotNull(dateToCompare, date)) {
             return date.isAfter(dateToCompare) || date.isEqual(dateToCompare);
@@ -164,7 +170,7 @@ public class Dates {
     public static boolean after(Date dateToCompare, Date date) {
         return after(convert(dateToCompare), convert(date));
     }
-    
+
     public static boolean after(DateTime dateToCompare, DateTime date) {
         if (allNotNull(dateToCompare, date)) {
             return date.isAfter(dateToCompare);
@@ -176,7 +182,7 @@ public class Dates {
     public static boolean beforeOrEquals(Date dateToCompare, Date date) {
         return beforeOrEquals(convert(dateToCompare), convert(date));
     }
-    
+
     public static boolean beforeOrEquals(DateTime dateToCompare, DateTime date) {
         if (allNotNull(dateToCompare, date)) {
             return date.isBefore(dateToCompare) || date.isEqual(dateToCompare);
@@ -188,7 +194,7 @@ public class Dates {
     public static boolean before(Date dateToCompare, Date date) {
         return before(convert(dateToCompare), convert(date));
     }
-    
+
     public static boolean before(DateTime dateToCompare, DateTime date) {
         if (allNotNull(dateToCompare, date)) {
             return date.isBefore(dateToCompare);
@@ -206,22 +212,163 @@ public class Dates {
         Interval interval = getInterval(fromDate, untilDate);
         return interval.toDurationMillis();
     }
-    
+
     public static Interval getInterval(Date fromDate, Date untilDate) {
         return new Interval(convert(fromDate), convert(untilDate));
     }
-    
-    
+
     public static Interval getInterval(DateTime fromDate, DateTime untilDate) {
         return new Interval(fromDate, untilDate);
     }
-    
+
     public static Interval getInterval(long fromDate, long untilDate) {
         return new Interval(fromDate, untilDate);
     }
 
     public static long getSecondsInDateInterval(Date fromDate, Date untilDate) {
         return getSecondsFromMillis(getDateInterval(fromDate, untilDate));
+    }
+
+    public static DateTime addSeconds(DateTime date, int seconds) {
+        if (Objects.nonNull(date)) {
+            return date.plusSeconds(seconds);
+        } else {
+            return null;
+        }
+    }
+
+    public static Date addSeconds(Date date, int seconds) {
+        DateTime dateTime = addSeconds(convert(date), seconds);
+        if (Objects.nonNull(dateTime)) {
+            return dateTime.toDate();
+        } else {
+            return null;
+        }
+    }
+
+    public static DateTime addSeconds(DateTime dateTime, long seconds) {
+        return addSeconds(dateTime, Long.valueOf(seconds).intValue());
+    }
+
+    public static Date addSeconds(Date date, long seconds) {
+        return addSeconds(date, Long.valueOf(seconds).intValue());
+    }
+
+    /**
+     * Round date to minutes
+     *
+     * @param date
+     * @return Date
+     */
+    public static Date roundToMinutes(Date date) {
+        return roundSecure(date, Calendar.MINUTE);
+    }
+
+    public static Date roundSecure(Date date, int field) {
+        if (Objects.nonNull(date)) {
+            return DateUtils.round(date, field);
+        } else {
+            return null;
+        }
+    }
+
+    public static long getSecondsInHalfInterval(Date fromDate, Date untilDate) {
+        return Dates.getSecondsInDateInterval(fromDate, untilDate) / Numbers.TWO;
+    }
+
+    public static Date addDays(Date date, int days) {
+        return DateUtils.addDays(date, days);
+    }
+
+    /**
+     * Remove days
+     *
+     * @param date
+     * @param days
+     * @return Date
+     */
+    public static Date removeDays(Date date, int days) {
+        return addDays(date, Numbers.toMinus(days));
+    }
+
+    public static long getMonthsFromSeconds(long seconds) {
+        return Math.round(seconds / SECONDS_IN_MONTH);
+    }
+
+    public static long getSecondsFromMonths(long months) {
+        return SECONDS_IN_MONTH * months;
+    }
+
+    private static long removeSeconds(long seconds, long secondsToRemove) {
+        if (seconds >= secondsToRemove) {
+            return seconds - secondsToRemove;
+        } else {
+            return seconds;
+        }
+    }
+
+    public static long removeMonthsFromSeconds(long seconds, long months) {
+        return removeSeconds(seconds, getSecondsFromMonths(months));
+    }
+
+    public static long getWeeksFromSeconds(long seconds) {
+        return Math.round(seconds / SECONDS_IN_WEEK);
+    }
+
+    public static long getSecondsFromWeeks(long weeks) {
+        return Math.round(SECONDS_IN_WEEK * weeks);
+    }
+
+    public static long removeWeeksFromSeconds(long seconds, long weeks) {
+        return removeSeconds(seconds, getSecondsFromWeeks(weeks));
+    }
+
+    public static long getDaysFromSeconds(long seconds) {
+        return Duration.standardSeconds(seconds).getStandardDays();
+    }
+
+    public static long getSecondsFromHours(long hours) {
+        return Duration.standardHours(hours).getStandardSeconds();
+    }
+
+    /**
+     * Get seconds fromDays
+     *
+     * @param days
+     * @return long
+     */
+    public static long getSecondsFromDays(long days) {
+        return Duration.standardDays(days).getStandardSeconds();
+    }
+
+    public static long removeDaysFromSeconds(long seconds, long days) {
+        return removeSeconds(seconds, getSecondsFromDays(days));
+    }
+
+    /**
+     * Get minutes from seconds
+     *
+     * @param seconds
+     * @return long
+     */
+    public static long getMinutesFromSeconds(long seconds) {
+        return Duration.standardSeconds(seconds).getStandardMinutes();
+    }
+
+    public static long getHoursFromSeconds(long seconds) {
+        return Duration.standardSeconds(seconds).getStandardHours();
+    }
+
+    public static long getMonthsFromDays(long days) {
+        return Math.round(days / DAYS_IN_MONTH);
+    }
+
+    public static long removeMonthsFromDays(long days, long months) {
+        return removeSeconds(days, getDaysFromMonths(months));
+    }
+
+    public static long getDaysFromMonths(long months) {
+        return Math.round(months * DAYS_IN_MONTH);
     }
 
 }
