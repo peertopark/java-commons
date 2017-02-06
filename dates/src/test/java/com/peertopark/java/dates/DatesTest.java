@@ -225,44 +225,406 @@ public class DatesTest {
         otherDate = Dates.now();
         assertFalse(Dates.anyNull(oneDate, date, otherDate));
     }
-    
-    
+
     @Test
     public void testGetInterval() {
         DateTime fromDateTime = DateTime.now();
         DateTime untilDateTime = DateTime.now();
         Interval interval = Dates.getInterval(fromDateTime, untilDateTime);
         assertNotNull(interval);
-        
+
         Date fromDate = Dates.now();
         Date untilDate = Dates.now();
         interval = Dates.getInterval(fromDate, untilDate);
         assertNotNull(interval);
     }
-    
-    
+
     @Test
-    public void testGetDateInterval() throws ParseException {  
-        Date now = Dates.now();      
+    public void testGetDateInterval() throws ParseException {
+        Date now = Dates.now();
         long fromDateLong = now.getTime();
-        long untilDateLong = fromDateLong + Dates.DAYS_IN_MONTH;     
+        long untilDateLong = fromDateLong + Dates.DAYS_IN_MONTH;
         long result = Dates.getDateInterval(fromDateLong, untilDateLong);
         assertEquals(Dates.DAYS_IN_MONTH, result);
-        
+
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
         Date fromDate = dateFormat.parse("01-01-2016 00:00");
         Date untilDate = dateFormat.parse("01-01-2016 00:05");
         result = Dates.getDateInterval(fromDate, untilDate);
         assertEquals(Dates.FIVE_MIN_IN_MILLIS, result);
     }
-    
+
     @Test
-    public void testGetSecondsInDateInterval() throws ParseException {  
+    public void testGetSecondsInDateInterval() throws ParseException {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
         Date fromDate = dateFormat.parse("01-01-2016 00:00");
         Date untilDate = dateFormat.parse("01-01-2016 00:30");
         long result = Dates.getSecondsInDateInterval(fromDate, untilDate);
         assertEquals(Dates.THIRTY_MIN_IN_SECONDS, result);
+    }
+
+    @Test
+    public void testAddSeconds() throws ParseException {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("mm:ss");
+        Date date = dateFormat.parse("00:00");
+        Date expectedDate = dateFormat.parse("01:00");
+        int seconds = 60;
+        Date addedDate = Dates.addSeconds(date, seconds);
+        assertNotNull(addedDate);
+        assertEquals(expectedDate, addedDate);
+
+        seconds = 0;
+        addedDate = Dates.addSeconds(date, seconds);
+        assertNotNull(addedDate);
+        assertEquals(date, addedDate);
+    }
+
+    @Test
+    public void testAddSecondsLong() throws ParseException {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("mm:ss");
+        Date date = dateFormat.parse("00:00");
+        Date expectedDate = dateFormat.parse("01:00");
+
+        long seconds = 60;
+        Date addedDate = Dates.addSeconds(date, seconds);
+        assertNotNull(addedDate);
+        assertEquals(expectedDate, addedDate);
+
+        seconds = 0;
+        addedDate = Dates.addSeconds(date, seconds);
+        assertNotNull(addedDate);
+        assertEquals(date, addedDate);
+    }
+
+    @Test
+    public void testRoundToMinutes() throws ParseException {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+        Date date = dateFormat.parse("00:00:35");
+        Date expectedDate = dateFormat.parse("00:01:00");
+        Date resultDate = Dates.roundToMinutes(date);
+        assertEquals(expectedDate, resultDate);
+
+        date = dateFormat.parse("00:00:25");
+        expectedDate = dateFormat.parse("00:00:00");
+        resultDate = Dates.roundToMinutes(date);
+        assertEquals(expectedDate, resultDate);
+    }
+
+    @Test
+    public void testGetSecondsInHalfInterval() throws ParseException {
+        Date fromDate = Dates.now();
+        long secondsResult = 300;
+        Date untilDate = Dates.addSeconds(fromDate, 600);
+        long secondsInterval = Dates.getSecondsInHalfInterval(fromDate, untilDate);
+        assertEquals(secondsResult, secondsInterval);
+
+        fromDate = Dates.now();
+        untilDate = Dates.addSeconds(fromDate, 3600);
+        secondsInterval = Dates.getSecondsInHalfInterval(fromDate, untilDate);
+        secondsResult = 1800;
+        assertEquals(secondsResult, secondsInterval);
+    }
+
+    @Test
+    public void testAddDays() throws ParseException {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+        Date date = dateFormat.parse("05-01-2016 00:00");
+        Date expectedDate = dateFormat.parse("06-01-2016 00:00");
+        int days = 1;
+        Date addedDate = Dates.addDays(date, days);
+        assertNotNull(addedDate);
+        assertEquals(expectedDate, addedDate);
+
+        days = 0;
+        addedDate = Dates.addSeconds(date, days);
+        assertNotNull(addedDate);
+        assertEquals(date, addedDate);
+    }
+
+    @Test
+    public void testRemoveDays() throws ParseException {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+        Date date = dateFormat.parse("06-01-2016 00:00");
+        Date expectedDate = dateFormat.parse("05-01-2016 00:00");
+        int days = 1;
+        Date addedDate = Dates.removeDays(date, days);
+        assertNotNull(addedDate);
+        assertEquals(expectedDate, addedDate);
+
+        days = 0;
+        addedDate = Dates.addSeconds(date, days);
+        assertNotNull(addedDate);
+        assertEquals(date, addedDate);
+    }
+
+    @Test
+    public void testGetMonthsFromSeconds() throws ParseException {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-M-yyyy hh:mm");
+        Date fromDate = dateFormat.parse("01-01-2016 00:00");
+        Date untilDate = dateFormat.parse("08-01-2016 00:00");
+        long secondsInterval = Dates.getSecondsInDateInterval(fromDate, untilDate);
+        long months = Dates.getMonthsFromSeconds(secondsInterval);
+        long expected = 0;
+        assertEquals(expected, months);
+        fromDate = dateFormat.parse("01-01-2016 00:00");
+        untilDate = dateFormat.parse("31-01-2016 00:00");
+        secondsInterval = Dates.getSecondsInDateInterval(fromDate, untilDate);
+        months = Dates.getMonthsFromSeconds(secondsInterval);
+        expected = 1;
+        assertEquals(expected, months);
+        fromDate = dateFormat.parse("01-01-2016 00:00");
+        untilDate = dateFormat.parse("01-03-2016 00:00");
+        secondsInterval = Dates.getSecondsInDateInterval(fromDate, untilDate);
+        months = Dates.getMonthsFromSeconds(secondsInterval);
+        expected = 2;
+        assertEquals(expected, months);
+        fromDate = dateFormat.parse("01-01-2016 00:00");
+        untilDate = dateFormat.parse("01-04-2016 00:00");
+        secondsInterval = Dates.getSecondsInDateInterval(fromDate, untilDate);
+        months = Dates.getMonthsFromSeconds(secondsInterval);
+        expected = 3;
+        assertEquals(expected, months);
+        fromDate = dateFormat.parse("01-01-2016 00:00");
+        untilDate = dateFormat.parse("01-08-2016 00:00");
+        secondsInterval = Dates.getSecondsInDateInterval(fromDate, untilDate);
+        months = Dates.getMonthsFromSeconds(secondsInterval);
+        expected = 7;
+        assertEquals(expected, months);
+    }
+
+    @Test
+    public void testRemoveMonthsFromSeconds() throws ParseException {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-M-yyyy hh:mm");
+        Date fromDate = dateFormat.parse("01-01-2016 00:00");
+        Date untilDate = dateFormat.parse("31-01-2016 00:00");
+        long secondsInterval = Dates.getSecondsInDateInterval(fromDate, untilDate);
+        long months = Dates.getMonthsFromSeconds(secondsInterval);
+        long expected = 1;
+        assertEquals(expected, months);
+        long removedSeconds = Dates.removeMonthsFromSeconds(secondsInterval, months);
+        expected = 0;
+        assertEquals(expected, removedSeconds);
+        fromDate = dateFormat.parse("01-01-2016 00:00");
+        untilDate = dateFormat.parse("31-01-2016 00:01");
+        secondsInterval = Dates.getSecondsInDateInterval(fromDate, untilDate);
+        months = Dates.getMonthsFromSeconds(secondsInterval);
+        expected = 1;
+        assertEquals(expected, months);
+        removedSeconds = Dates.removeMonthsFromSeconds(secondsInterval, months);
+        expected = 60;
+        assertEquals(expected, removedSeconds);
+    }
+
+    @Test
+    public void testGetSecondsFromMonths() {
+        int months = 1;
+        long seconds = Dates.getSecondsFromMonths(months);
+        long expected = Dates.SECONDS_IN_MONTH;
+        assertEquals(expected, seconds);
+        months = 2;
+        seconds = Dates.getSecondsFromMonths(months);
+        expected = 5184000;
+        assertEquals(expected, seconds);
+        months = 3;
+        seconds = Dates.getSecondsFromMonths(months);
+        expected = 7776000;
+        assertEquals(expected, seconds);
+    }
+
+    @Test
+    public void testRemoveWeeksFromSeconds() throws ParseException {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-M-yyyy hh:mm");
+        Date fromDate = dateFormat.parse("01-01-2016 00:00");
+        Date untilDate = dateFormat.parse("08-01-2016 00:00");
+        long secondsInterval = Dates.getSecondsInDateInterval(fromDate, untilDate);
+        long weeks = Dates.getWeeksFromSeconds(secondsInterval);
+        long expected = 1;
+        assertEquals(expected, weeks);
+        long removedSeconds = Dates.removeWeeksFromSeconds(secondsInterval, weeks);
+        expected = 0;
+        assertEquals(expected, removedSeconds);
+        fromDate = dateFormat.parse("01-01-2016 00:00");
+        untilDate = dateFormat.parse("15-01-2016 00:01");
+        secondsInterval = Dates.getSecondsInDateInterval(fromDate, untilDate);
+        weeks = Dates.getWeeksFromSeconds(secondsInterval);
+        expected = 2;
+        assertEquals(expected, weeks);
+        removedSeconds = Dates.removeWeeksFromSeconds(secondsInterval, weeks);
+        expected = 60;
+        assertEquals(expected, removedSeconds);
+    }
+
+    @Test
+    public void testGetDaysFromSeconds() throws ParseException {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-M-yyyy hh:mm");
+        Date fromDate = dateFormat.parse("01-01-2016 00:00");
+        Date untilDate = dateFormat.parse("03-01-2016 00:00");
+        long secondsInterval = Dates.getSecondsInDateInterval(fromDate, untilDate);
+        long daysInterval = Dates.getDaysFromSeconds(secondsInterval);
+        long daysResult = 2;
+        assertEquals(daysResult, daysInterval);
+        fromDate = dateFormat.parse("01-01-2016 00:00");
+        untilDate = dateFormat.parse("31-01-2016 00:00");
+        secondsInterval = Dates.getSecondsInDateInterval(fromDate, untilDate);
+        daysInterval = Dates.getDaysFromSeconds(secondsInterval);
+        daysResult = 30;
+        assertEquals(daysResult, daysInterval);
+        fromDate = dateFormat.parse("01-02-2015 00:00");
+        untilDate = dateFormat.parse("01-03-2015 00:00");
+        secondsInterval = Dates.getSecondsInDateInterval(fromDate, untilDate);
+        daysInterval = Dates.getDaysFromSeconds(secondsInterval);
+        daysResult = 28;
+        assertEquals(daysResult, daysInterval);
+        fromDate = dateFormat.parse("01-02-2016 00:00");
+        untilDate = dateFormat.parse("01-03-2016 00:00");
+        secondsInterval = Dates.getSecondsInDateInterval(fromDate, untilDate);
+        daysInterval = Dates.getDaysFromSeconds(secondsInterval);
+        daysResult = 29;
+        assertEquals(daysResult, daysInterval);
+    }
+
+    @Test
+    public void testGetSecondsFromDays() {
+        long days = 1;
+        long seconds = Dates.getSecondsFromDays(days);
+        long expected = Dates.SECONDS_IN_DAY;
+        assertEquals(expected, seconds);
+        days = 14;
+        seconds = Dates.getSecondsFromDays(days);
+        expected = 1209600;
+        assertEquals(expected, seconds);
+        days = 30;
+        seconds = Dates.getSecondsFromDays(days);
+        expected = 2592000;
+        assertEquals(expected, seconds);
+    }
+
+    @Test
+    public void testRemoveDaysFromSeconds() throws ParseException {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-M-yyyy hh:mm");
+        Date fromDate = dateFormat.parse("01-01-2016 00:00");
+        Date untilDate = dateFormat.parse("02-01-2016 00:00");
+        long secondsInterval = Dates.getSecondsInDateInterval(fromDate, untilDate);
+        long days = Dates.getDaysFromSeconds(secondsInterval);
+        long expected = 1;
+        assertEquals(expected, days);
+        long removedSeconds = Dates.removeDaysFromSeconds(secondsInterval, days);
+        expected = 0;
+        assertEquals(expected, removedSeconds);
+        fromDate = dateFormat.parse("01-01-2016 00:00");
+        untilDate = dateFormat.parse("05-01-2016 00:01");
+        secondsInterval = Dates.getSecondsInDateInterval(fromDate, untilDate);
+        days = Dates.getDaysFromSeconds(secondsInterval);
+        expected = 4;
+        assertEquals(expected, days);
+        removedSeconds = Dates.removeDaysFromSeconds(secondsInterval, days);
+        expected = 60;
+        assertEquals(expected, removedSeconds);
+    }
+
+    @Test
+    public void testGetSecondsFromHours() {
+        long hours = 1;
+        long expected = 3600;
+        long result = Dates.getSecondsFromHours(hours);
+        assertEquals(expected, result);
+
+        hours = 2;
+        expected = 7200;
+        result = Dates.getSecondsFromHours(hours);
+        assertEquals(expected, result);
+
+        hours = 5;
+        expected = 18000;
+        result = Dates.getSecondsFromHours(hours);
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void testGetMinutesFromSeconds() throws ParseException {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-M-yyyy hh:mm");
+        Date fromDate = dateFormat.parse("01-01-2016 00:00");
+        Date untilDate = dateFormat.parse("01-01-2016 00:01");
+        long secondsInterval = Dates.getSecondsInDateInterval(fromDate, untilDate);
+        long minutes = Dates.getMinutesFromSeconds(secondsInterval);
+        long expected = 1;
+        assertEquals(expected, minutes);
+        fromDate = dateFormat.parse("01-01-2016 00:00");
+        untilDate = dateFormat.parse("01-01-2016 00:10");
+        secondsInterval = Dates.getSecondsInDateInterval(fromDate, untilDate);
+        minutes = Dates.getMinutesFromSeconds(secondsInterval);
+        expected = 10;
+        assertEquals(expected, minutes);
+        fromDate = dateFormat.parse("01-01-2016 00:00");
+        untilDate = dateFormat.parse("01-01-2016 02:00");
+        secondsInterval = Dates.getSecondsInDateInterval(fromDate, untilDate);
+        minutes = Dates.getMinutesFromSeconds(secondsInterval);
+        expected = 120;
+        assertEquals(expected, minutes);
+    }
+
+    @Test
+    public void testGetHoursFromSeconds() {
+        long seconds = 3600;
+        long expected = 1;
+        long result = Dates.getHoursFromSeconds(seconds);
+        assertEquals(expected, result);
+
+        seconds = 7200;
+        expected = 2;
+        result = Dates.getHoursFromSeconds(seconds);
+        assertEquals(expected, result);
+
+        seconds = 18000;
+        expected = 5;
+        result = Dates.getHoursFromSeconds(seconds);
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void testGetMonthsFromDays() {
+        long days = 30;
+        long expected = 1;
+        long result = Dates.getMonthsFromDays(days);
+        assertEquals(expected, result);
+
+        days = 60;
+        expected = 2;
+        result = Dates.getMonthsFromDays(days);
+        assertEquals(expected, result);
+
+        days = 35;
+        expected = 1;
+        result = Dates.getMonthsFromDays(days);
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void testGetDaysFromMonths() {
+        long months = 1;
+        long expected = 30;
+        long result = Dates.getDaysFromMonths(months);
+        assertEquals(expected, result);
+
+        months = 2;
+        expected = 60;
+        result = Dates.getDaysFromMonths(months);
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void testRemoveMonthsFromDays() {
+        long months = 1;
+        long days = 31;
+        long expected = 1;
+        long result = Dates.removeMonthsFromDays(days, months);
+        assertEquals(expected, result);
+
+        months = 2;
+        days = 62;
+        expected = 2;
+        result = Dates.removeMonthsFromDays(days, months);
+        assertEquals(expected, result);
     }
 
 }
