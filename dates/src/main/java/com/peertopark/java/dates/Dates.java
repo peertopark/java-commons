@@ -371,4 +371,35 @@ public class Dates {
         return Math.round(months * DAYS_IN_MONTH);
     }
 
+    /**
+     * Date from Long
+     *
+     * @param longDate
+     * @return
+     */
+    public static Date from(Long longDate) {
+        if (Objects.isNull(longDate)) {
+            return null;
+        } else {
+            return new Date(longDate);
+        }
+    }
+
+    /**
+     * Check if date interval collision another date interval
+     *
+     * @param firstDateInInterval
+     * @param secondDateInInterval
+     * @param firsrDateInIntervalToCompare
+     * @param secondDateInIntervalToCompare
+     * @return True
+     */
+    public static boolean checkIfDatesIntervalCollisionAnotherInterval(Date firstDateInInterval, Date secondDateInInterval, Date firsrDateInIntervalToCompare, Date secondDateInIntervalToCompare) {
+        if (Objects.nonNull(firstDateInInterval) && Objects.nonNull(secondDateInInterval) && Objects.nonNull(firsrDateInIntervalToCompare) && Objects.nonNull(secondDateInIntervalToCompare)) {
+            return beforeOrEquals(secondDateInIntervalToCompare, firstDateInInterval) && afterOrEquals(firsrDateInIntervalToCompare, secondDateInInterval);
+        } else {
+            return false;
+        }
+    }
+
 }
