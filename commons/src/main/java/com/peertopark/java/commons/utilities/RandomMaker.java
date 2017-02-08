@@ -15,7 +15,6 @@
  */
 package com.peertopark.java.commons.utilities;
 
-import java.util.Random;
 import org.apache.commons.lang3.RandomUtils;
 
 /**
@@ -30,14 +29,21 @@ public class RandomMaker {
             min = max;
             max = aux;
         }
-        Random aleatorio = new Random();
+        int startRange = min;
+        if (startRange < Numbers.ZERO) {
+            startRange = Numbers.ZERO;
+        }      
+        int endRange = Math.abs(max);
+        if (max <= Numbers.ZERO) {
+            endRange = Math.abs(min);
+        }      
         int numale;
         do {
-            numale = aleatorio.nextInt(max + 1);
-            if (aleatorio.nextBoolean()) {
+            numale = RandomUtils.nextInt(startRange, endRange + Numbers.ONE);
+            if (RandomUtils.nextBoolean()) {
                 numale = -numale;
             }
-        } while (numale < min);
+        } while (numale < min || numale > max);
         return numale;
     }
 
@@ -47,11 +53,18 @@ public class RandomMaker {
             min = max;
             max = aux;
         }
-        Random aleatorio = new Random();
+        long startRange = min;
+        if (startRange < Numbers.ZERO) {
+            startRange = Numbers.ZERO;
+        }      
+        long endRange = Math.abs(max);
+        if (max <= Numbers.ZERO) {
+            endRange = Math.abs(min);
+        }      
         long numale;
         do {
-            numale = aleatorio.nextLong();
-            if (aleatorio.nextBoolean()) {
+            numale = RandomUtils.nextLong(startRange, endRange + Numbers.ONE);
+            if (RandomUtils.nextBoolean()) {
                 numale = -numale;
             }
         } while (numale < min || numale > max);
@@ -64,11 +77,10 @@ public class RandomMaker {
             min = max;
             max = aux;
         }
-        Random aleatorio = new Random();
         double numale;
         do {
-            numale = aleatorio.nextDouble() * (max - min) + min;
-            if (aleatorio.nextBoolean()) {
+            numale = RandomUtils.nextDouble(Numbers.ZERO, Math.abs(max)) * (max - min) + min;
+            if (RandomUtils.nextBoolean()) {
                 numale = -numale;
             }
         } while (numale < min || numale > max);
