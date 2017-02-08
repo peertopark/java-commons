@@ -252,6 +252,9 @@ public class DatesTest {
         Date untilDate = dateFormat.parse("01-01-2016 00:05");
         result = Dates.getDateInterval(fromDate, untilDate);
         assertEquals(Dates.FIVE_MIN_IN_MILLIS, result);
+
+        result = Dates.getDateInterval(untilDate, fromDate);
+        assertEquals(-Dates.FIVE_MIN_IN_MILLIS, result);
     }
 
     @Test
