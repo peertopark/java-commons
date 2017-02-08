@@ -27,22 +27,22 @@ import static org.junit.Assert.*;
  * @author hector
  */
 public class RandomMakerTest {
-    
+
     public RandomMakerTest() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
@@ -51,11 +51,48 @@ public class RandomMakerTest {
      * Test of between method, of class RandomMaker.
      */
     @Test
-    public void testBetween() {
+    public void testBetween_int_int() {
         int min = 0;
         int max = 10;
         int result = RandomMaker.between(min, max);
         assertTrue(result >= min && result <= max);
+        
+        min = -10;
+        max = 10;
+        result = RandomMaker.between(min, max);
+        assertTrue(result >= min && result <= max);
+
     }
-    
+
+
+    /**
+     * Test of between method, of class RandomMaker.
+     */
+    @Test
+    public void testBetween_double_double() {
+        double min = 0.0;
+        double max = 10.0;
+        double result = RandomMaker.between(min, max);
+        assertTrue(result >= min && result <= max);
+        
+        min = -10.0;
+        max = 10.0;
+        result = RandomMaker.between(min, max);
+        assertTrue(result >= min && result <= max);
+        
+        min = -15.0;
+        max = -10.0;
+        result = RandomMaker.between(min, max);
+        assertTrue(result >= min && result <= max);
+    }
+
+    /**
+     * Test of getBoolean method, of class RandomMaker.
+     */
+    @Test
+    public void testGetBoolean() {
+        Boolean result = RandomMaker.getBoolean();
+        assertNotNull(result);
+    }
+
 }

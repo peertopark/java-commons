@@ -15,6 +15,7 @@
  */
 package com.peertopark.java.commons.utilities;
 
+import java.util.Random;
 import org.apache.commons.lang3.RandomUtils;
 
 /**
@@ -22,9 +23,60 @@ import org.apache.commons.lang3.RandomUtils;
  * @author hector
  */
 public class RandomMaker {
-    
+
     public static int between(int min, int max) {
-        return RandomUtils.nextInt(min, max + 1);
+        if (min > max) {
+            int aux = min;
+            min = max;
+            max = aux;
+        }
+        Random aleatorio = new Random();
+        int numale;
+        do {
+            numale = aleatorio.nextInt(max + 1);
+            if (aleatorio.nextBoolean()) {
+                numale = -numale;
+            }
+        } while (numale < min);
+        return numale;
     }
-    
+
+    public static long between(long min, long max) {
+        if (min > max) {
+            long aux = min;
+            min = max;
+            max = aux;
+        }
+        Random aleatorio = new Random();
+        long numale;
+        do {
+            numale = aleatorio.nextLong();
+            if (aleatorio.nextBoolean()) {
+                numale = -numale;
+            }
+        } while (numale < min || numale > max);
+        return numale;
+    }
+
+    public static double between(double min, double max) {
+        if (min > max) {
+            double aux = min;
+            min = max;
+            max = aux;
+        }
+        Random aleatorio = new Random();
+        double numale;
+        do {
+            numale = aleatorio.nextDouble() * (max - min) + min;
+            if (aleatorio.nextBoolean()) {
+                numale = -numale;
+            }
+        } while (numale < min || numale > max);
+        return numale;
+    }
+
+    public static Boolean getBoolean() {
+        return RandomUtils.nextBoolean();
+    }
+
 }

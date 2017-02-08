@@ -114,14 +114,26 @@ public class NumbersTest {
     }
 
     @Test
-    public void testToMinus() {
+    public void testToNegativeInt() {
         int number = 1;
         int expected = -1;
-        int result = Numbers.toMinus(number);
+        int result = Numbers.toNegative(number);
         assertEquals(expected, result);
 
         number = -1;
-        result = Numbers.toMinus(number);
+        result = Numbers.toNegative(number);
+        assertEquals(expected, result);
+    }
+    
+    @Test
+    public void testToNegativeLong() {
+        long number = 1;
+        long expected = -1;
+        long result = Numbers.toNegative(number);
+        assertEquals(expected, result);
+
+        number = -1;
+        result = Numbers.toNegative(number);
         assertEquals(expected, result);
     }
 

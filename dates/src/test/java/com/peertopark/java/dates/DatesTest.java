@@ -252,6 +252,9 @@ public class DatesTest {
         Date untilDate = dateFormat.parse("01-01-2016 00:05");
         result = Dates.getDateInterval(fromDate, untilDate);
         assertEquals(Dates.FIVE_MIN_IN_MILLIS, result);
+
+        result = Dates.getDateInterval(untilDate, fromDate);
+        assertEquals(-Dates.FIVE_MIN_IN_MILLIS, result);
     }
 
     @Test
@@ -625,6 +628,60 @@ public class DatesTest {
         expected = 2;
         result = Dates.removeMonthsFromDays(days, months);
         assertEquals(expected, result);
+    }
+
+    @Test
+    public void testFrom() {
+        Long fromLong = Dates.now().getTime();
+        Date date = Dates.from(fromLong);
+        assertNotNull(date);
+    }
+
+    @Test
+    public void testCheckIfDatesIntervalCollisionBetweenAnotherInterval() throws ParseException {
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        Date firstDateInIntervalToCompare = dateFormat.parse("05-01-2016");
+        Date secondDateInIntervalToCompare = dateFormat.parse("10-01-2016");
+
+        assertFalse(Dates.checkIfDatesIntervalCollisionAnotherInterval(null, null, null, null));
+        assertFalse(Dates.checkIfDatesIntervalCollisionAnotherInterval(null, null, firstDateInIntervalToCompare, secondDateInIntervalToCompare));
+
+        Date firstDateInInterval = dateFormat.parse("01-01-2016");
+        Date secondDateInInterval = dateFormat.parse("04-01-2016");
+        assertFalse(Dates.checkIfDatesIntervalCollisionAnotherInterval(firstDateInInterval, secondDateInInterval, firstDateInIntervalToCompare, secondDateInIntervalToCompare));
+
+        firstDateInInterval = dateFormat.parse("11-01-2016");
+        secondDateInInterval = dateFormat.parse("14-01-2016");
+        assertFalse(Dates.checkIfDatesIntervalCollisionAnotherInterval(firstDateInInterval, secondDateInInterval, firstDateInIntervalToCompare, secondDateInIntervalToCompare));
+
+        firstDateInInterval = dateFormat.parse("01-01-2016");
+        secondDateInInterval = dateFormat.parse("05-01-2016");
+        assertTrue(Dates.checkIfDatesIntervalCollisionAnotherInterval(firstDateInInterval, secondDateInInterval, firstDateInIntervalToCompare, secondDateInIntervalToCompare));
+
+        firstDateInInterval = dateFormat.parse("10-01-2016");
+        secondDateInInterval = dateFormat.parse("14-01-2016");
+        assertTrue(Dates.checkIfDatesIntervalCollisionAnotherInterval(firstDateInInterval, secondDateInInterval, firstDateInIntervalToCompare, secondDateInIntervalToCompare));
+
+        firstDateInInterval = dateFormat.parse("01-01-2016");
+        secondDateInInterval = dateFormat.parse("08-01-2016");
+        assertTrue(Dates.checkIfDatesIntervalCollisionAnotherInterval(firstDateInInterval, secondDateInInterval, firstDateInIntervalToCompare, secondDateInIntervalToCompare));
+
+        firstDateInInterval = dateFormat.parse("08-01-2016");
+        secondDateInInterval = dateFormat.parse("14-01-2016");
+        assertTrue(Dates.checkIfDatesIntervalCollisionAnotherInterval(firstDateInInterval, secondDateInInterval, firstDateInIntervalToCompare, secondDateInIntervalToCompare));
+
+        firstDateInInterval = dateFormat.parse("06-01-2016");
+        secondDateInInterval = dateFormat.parse("09-01-2016");
+        assertTrue(Dates.checkIfDatesIntervalCollisionAnotherInterval(firstDateInInterval, secondDateInInterval, firstDateInIntervalToCompare, secondDateInIntervalToCompare));
+
+        firstDateInInterval = dateFormat.parse("05-01-2016");
+        secondDateInInterval = dateFormat.parse("10-01-2016");
+        assertTrue(Dates.checkIfDatesIntervalCollisionAnotherInterval(firstDateInInterval, secondDateInInterval, firstDateInIntervalToCompare, secondDateInIntervalToCompare));
+
+        firstDateInInterval = dateFormat.parse("01-01-2016");
+        secondDateInInterval = dateFormat.parse("14-01-2016");
+        assertTrue(Dates.checkIfDatesIntervalCollisionAnotherInterval(firstDateInInterval, secondDateInInterval, firstDateInIntervalToCompare, secondDateInIntervalToCompare));
     }
 
 }

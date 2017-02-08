@@ -25,12 +25,8 @@ import java.util.TimeZone;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.joda.time.DateTime;
-import org.joda.time.Days;
 import org.joda.time.Duration;
-import org.joda.time.DurationFieldType;
 import org.joda.time.Interval;
-import org.joda.time.Months;
-import org.joda.time.Period;
 
 /**
  *
@@ -204,8 +200,11 @@ public class Dates {
     }
 
     public static long getDateInterval(Date fromDate, Date untilDate) {
-        Interval interval = getInterval(fromDate, untilDate);
-        return interval.toDurationMillis();
+        if (before(fromDate, untilDate)) {
+            return Numbers.toNegative(getInterval(untilDate, fromDate).toDurationMillis());
+        } else {
+            return getInterval(fromDate, untilDate).toDurationMillis();
+        }
     }
 
     public static long getDateInterval(long fromDate, long untilDate) {
@@ -253,6 +252,57 @@ public class Dates {
     public static Date addSeconds(Date date, long seconds) {
         return addSeconds(date, Long.valueOf(seconds).intValue());
     }
+    
+    public static DateTime addHours(DateTime date, int hours) {
+        if (Objects.nonNull(date)) {
+            return date.plusHours(hours);
+        } else {
+            return null;
+        }
+    }
+
+    public static Date addHours(Date date, int hours) {
+        DateTime dateTime = addHours(convert(date), hours);
+        if (Objects.nonNull(dateTime)) {
+            return dateTime.toDate();
+        } else {
+            return null;
+        }
+    }
+
+    public static DateTime addHours(DateTime dateTime, long hours) {
+        return addHours(dateTime, Long.valueOf(hours).intValue());
+    }
+
+    public static Date addHours(Date date, long hours) {
+        return addHours(date, Long.valueOf(hours).intValue());
+    }
+    
+    
+    public static DateTime addMinutes(DateTime date, int minutes) {
+        if (Objects.nonNull(date)) {
+            return date.plusMinutes(minutes);
+        } else {
+            return null;
+        }
+    }
+
+    public static Date addMinutes(Date date, int minutes) {
+        DateTime dateTime = addMinutes(convert(date), minutes);
+        if (Objects.nonNull(dateTime)) {
+            return dateTime.toDate();
+        } else {
+            return null;
+        }
+    }
+
+    public static DateTime addMinutes(DateTime dateTime, long minutes) {
+        return addMinutes(dateTime, Long.valueOf(minutes).intValue());
+    }
+
+    public static Date addMinutes(Date date, long minutes) {
+        return addMinutes(date, Long.valueOf(minutes).intValue());
+    }
 
     /**
      * Round date to minutes
@@ -288,7 +338,7 @@ public class Dates {
      * @return Date
      */
     public static Date removeDays(Date date, int days) {
-        return addDays(date, Numbers.toMinus(days));
+        return addDays(date, Numbers.toNegative(days));
     }
 
     public static long getMonthsFromSeconds(long seconds) {
@@ -369,6 +419,37 @@ public class Dates {
 
     public static long getDaysFromMonths(long months) {
         return Math.round(months * DAYS_IN_MONTH);
+    }
+
+    /**
+     * Date from Long
+     *
+     * @param longDate
+     * @return
+     */
+    public static Date from(Long longDate) {
+        if (Objects.isNull(longDate)) {
+            return null;
+        } else {
+            return new Date(longDate);
+        }
+    }
+
+    /**
+     * Check if date interval collision another date interval
+     *
+     * @param firstDateInInterval
+     * @param secondDateInInterval
+     * @param firsrDateInIntervalToCompare
+     * @param secondDateInIntervalToCompare
+     * @return True
+     */
+    public static boolean checkIfDatesIntervalCollisionAnotherInterval(Date firstDateInInterval, Date secondDateInInterval, Date firsrDateInIntervalToCompare, Date secondDateInIntervalToCompare) {
+        if (Objects.nonNull(firstDateInInterval) && Objects.nonNull(secondDateInInterval) && Objects.nonNull(firsrDateInIntervalToCompare) && Objects.nonNull(secondDateInIntervalToCompare)) {
+            return beforeOrEquals(secondDateInIntervalToCompare, firstDateInInterval) && afterOrEquals(firsrDateInIntervalToCompare, secondDateInInterval);
+        } else {
+            return false;
+        }
     }
 
 }

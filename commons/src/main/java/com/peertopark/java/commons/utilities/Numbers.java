@@ -186,7 +186,15 @@ public class Numbers {
         return number > numberToCompare;
     }
 
-    public static int toMinus(int number) {
+    public static int toNegative(int number) {
+        if (isNegative(number)) {
+            return number;
+        } else {
+            return -number;
+        }
+    }
+    
+    public static long toNegative(long number) {
         if (isNegative(number)) {
             return number;
         } else {
