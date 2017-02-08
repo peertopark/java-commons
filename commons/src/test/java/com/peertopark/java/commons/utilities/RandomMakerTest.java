@@ -61,6 +61,30 @@ public class RandomMakerTest {
         max = 10;
         result = RandomMaker.between(min, max);
         assertTrue(result >= min && result <= max);
+        
+        min = -20;
+        max = -10;
+        result = RandomMaker.between(min, max);
+        assertTrue(result >= min && result <= max);
+
+    }
+    
+    @Test
+    public void testBetween_long_long() {
+        long min = 0l;
+        long max = 10l;
+        long result = RandomMaker.between(min, max);
+        assertTrue(result >= min && result <= max);
+        
+        min = -10l;
+        max = 10l;
+        result = RandomMaker.between(min, max);
+        assertTrue(result >= min && result <= max);
+        
+        min = -20l;
+        max = -10l;
+        result = RandomMaker.between(min, max);
+        assertTrue(result >= min && result <= max);
 
     }
 
