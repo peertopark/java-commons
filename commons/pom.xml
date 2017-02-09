@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.peertopark.java</groupId>
         <artifactId>parent</artifactId>
-        <version>3.1.6-SNAPSHOT</version>
+        <version>3.1.6</version>
     </parent>
     <groupId>com.peertopark.java</groupId>
     <artifactId>commons</artifactId>
