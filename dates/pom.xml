@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.peertopark.java</groupId>
         <artifactId>parent</artifactId>
-        <version>3.1.4</version>
+        <version>3.1.5</version>
     </parent>
     <artifactId>dates</artifactId>
     <name>${project.groupId}.${project.artifactId}</name>
