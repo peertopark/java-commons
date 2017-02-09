@@ -201,28 +201,17 @@ public class Dates {
 
     public static long getDateInterval(Date fromDate, Date untilDate) {
         if (before(fromDate, untilDate)) {
-            return Numbers.toNegative(getInterval(untilDate, fromDate).toDurationMillis());
+            return Numbers.toNegative(Intervals.getInterval(untilDate, fromDate).toDurationMillis());
         } else {
-            return getInterval(fromDate, untilDate).toDurationMillis();
+            return Intervals.getInterval(fromDate, untilDate).toDurationMillis();
         }
     }
 
     public static long getDateInterval(long fromDate, long untilDate) {
-        Interval interval = getInterval(fromDate, untilDate);
+        Interval interval = Intervals.getInterval(fromDate, untilDate);
         return interval.toDurationMillis();
     }
 
-    public static Interval getInterval(Date fromDate, Date untilDate) {
-        return new Interval(convert(fromDate), convert(untilDate));
-    }
-
-    public static Interval getInterval(DateTime fromDate, DateTime untilDate) {
-        return new Interval(fromDate, untilDate);
-    }
-
-    public static Interval getInterval(long fromDate, long untilDate) {
-        return new Interval(fromDate, untilDate);
-    }
 
     public static long getSecondsInDateInterval(Date fromDate, Date untilDate) {
         return getSecondsFromMillis(getDateInterval(fromDate, untilDate));
@@ -432,6 +421,15 @@ public class Dates {
             return null;
         } else {
             return new Date(longDate);
+        }
+    }
+    
+    
+    public static Date from(DateTime dateTime) {
+        if (Objects.isNull(dateTime)) {
+            return null;
+        } else {
+            return new Date(dateTime.getMillis());
         }
     }
 

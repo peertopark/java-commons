@@ -19,7 +19,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import org.joda.time.DateTime;
-import org.joda.time.Interval;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.junit.After;
@@ -226,18 +225,6 @@ public class DatesTest {
         assertFalse(Dates.anyNull(oneDate, date, otherDate));
     }
 
-    @Test
-    public void testGetInterval() {
-        DateTime fromDateTime = DateTime.now();
-        DateTime untilDateTime = DateTime.now();
-        Interval interval = Dates.getInterval(fromDateTime, untilDateTime);
-        assertNotNull(interval);
-
-        Date fromDate = Dates.now();
-        Date untilDate = Dates.now();
-        interval = Dates.getInterval(fromDate, untilDate);
-        assertNotNull(interval);
-    }
 
     @Test
     public void testGetDateInterval() throws ParseException {
