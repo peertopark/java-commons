@@ -15,17 +15,13 @@
  */
 package com.peertopark.java.dates;
 
-import com.peertopark.java.commons.utilities.Locales;
 import com.peertopark.java.commons.utilities.Numbers;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.joda.time.Duration;
 import org.joda.time.Interval;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -41,6 +37,7 @@ public class IntervalsTest {
     
     @BeforeClass
     public static void setUpClass() {
+        DateTimeZone.setDefault(DateTimeZone.UTC);
     }
     
     @AfterClass
@@ -70,13 +67,9 @@ public class IntervalsTest {
     
     
     @Test
-    public void testSplit() throws ParseException {
-        DateTimeFormatter dateFormat = DateTimeFormat.forPattern("dd-MM-yyyy HH:mm:ss");   
-        dateFormat.withZoneUTC();
-        dateFormat.withLocale(Locales.spanish());
-        
-        DateTime fromDate = dateFormat.parseDateTime("24-02-2017 14:00:00");
-        DateTime untilDate = dateFormat.parseDateTime("25-05-2017 15:00:00");
+    public void testSplit() {
+        DateTime fromDate = new DateTime(2017, 2, 24, 14, 0, 0);
+        DateTime untilDate = new DateTime(2017, 5, 24, 14, 0, 0);
        
         Interval interval = Intervals.getInterval(fromDate, untilDate);
         Duration duration = Duration.standardSeconds(Dates.THIRTY_DAYS_IN_SECONDS);
@@ -85,29 +78,30 @@ public class IntervalsTest {
         assertNotNull(intervals);
         assertEquals(Numbers.THREE, intervals.size());
         
-        fromDate = dateFormat.parseDateTime("24-02-2017 14:00:00");
-        untilDate = dateFormat.parseDateTime("09-06-2017 18:00:00");
+        fromDate = new DateTime(2017, 2, 24, 14, 0, 0);
+        untilDate = new DateTime(2017, 6, 9, 18, 0, 0);
         interval = Intervals.getInterval(fromDate, untilDate);
         intervals = Intervals.split(interval, duration);
         assertNotNull(intervals);
         assertEquals(Numbers.FOUR, intervals.size());
         
-        fromDate = dateFormat.parseDateTime("01-01-2017 14:00:00");
-        untilDate = dateFormat.parseDateTime("31-01-2017 14:00:00");
+        
+        fromDate = new DateTime(2017, 1, 1, 14, 0, 0);
+        untilDate = new DateTime(2017, 1, 31, 14, 0, 0);
         interval = Intervals.getInterval(fromDate, untilDate);
         intervals = Intervals.split(interval, duration);
         assertNotNull(intervals);
         assertEquals(Numbers.ONE, intervals.size());
-        
-        fromDate = dateFormat.parseDateTime("01-01-2017 14:00:00");
-        untilDate = dateFormat.parseDateTime("31-01-2017 15:00:00");
+
+        fromDate = new DateTime(2017, 1, 1, 14, 0, 0);
+        untilDate = new DateTime(2017, 1, 31, 15, 0, 0);
         interval = Intervals.getInterval(fromDate, untilDate);
         intervals = Intervals.split(interval, duration);
         assertNotNull(intervals);
         assertEquals(Numbers.TWO, intervals.size());
         
-        fromDate = dateFormat.parseDateTime("01-01-2017 14:00:00");
-        untilDate = dateFormat.parseDateTime("31-01-2017 10:00:00");
+        fromDate = new DateTime(2017, 1, 1, 14, 0, 0);
+        untilDate = new DateTime(2017, 1, 31, 10, 0, 0);
         interval = Intervals.getInterval(fromDate, untilDate);
         intervals = Intervals.split(interval, duration);
         assertNotNull(intervals);
