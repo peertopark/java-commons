@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.peertopark.java</groupId>
         <artifactId>parent</artifactId>
-        <version>3.1.5-SNAPSHOT</version>
+        <version>3.1.5</version>
     </parent>
     <artifactId>phoneutils</artifactId>
     <packaging>jar</packaging>
