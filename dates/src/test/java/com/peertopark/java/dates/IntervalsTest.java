@@ -15,6 +15,7 @@
  */
 package com.peertopark.java.dates;
 
+import com.peertopark.java.commons.utilities.Locales;
 import com.peertopark.java.commons.utilities.Numbers;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -71,6 +72,9 @@ public class IntervalsTest {
     @Test
     public void testSplit() throws ParseException {
         DateTimeFormatter dateFormat = DateTimeFormat.forPattern("dd-MM-yyyy HH:mm:ss");   
+        dateFormat.withZoneUTC();
+        dateFormat.withLocale(Locales.spanish());
+        
         DateTime fromDate = dateFormat.parseDateTime("24-02-2017 14:00:00");
         DateTime untilDate = dateFormat.parseDateTime("25-05-2017 15:00:00");
        
