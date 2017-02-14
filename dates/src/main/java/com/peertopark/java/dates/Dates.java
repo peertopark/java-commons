@@ -409,6 +409,21 @@ public class Dates {
     public static long getDaysFromMonths(long months) {
         return Math.round(months * DAYS_IN_MONTH);
     }
+    
+    
+    /**
+     * Date from Long
+     *
+     * @param longDate
+     * @return
+     */
+    public static Date from(String longDate) {
+        if (Objects.isNull(longDate)) {
+            return null;
+        } else {
+            return from(Long.valueOf(longDate));
+        }
+    }
 
     /**
      * Date from Long
