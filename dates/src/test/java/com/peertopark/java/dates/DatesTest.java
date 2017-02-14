@@ -622,6 +622,11 @@ public class DatesTest {
         Long fromLong = Dates.now().getTime();
         Date date = Dates.from(fromLong);
         assertNotNull(date);
+        
+        String dateLongString = Dates.transformDateToLongString(date);
+        Date resultDate = Dates.from(dateLongString);
+        assertNotNull(resultDate);
+        assertEquals(date, resultDate);
     }
 
     @Test
