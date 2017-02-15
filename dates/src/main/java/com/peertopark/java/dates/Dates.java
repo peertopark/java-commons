@@ -457,9 +457,9 @@ public class Dates {
      * @param secondDateInIntervalToCompare
      * @return True
      */
-    public static boolean checkIfDatesIntervalCollisionAnotherInterval(Date firstDateInInterval, Date secondDateInInterval, Date firsrDateInIntervalToCompare, Date secondDateInIntervalToCompare) {
-        if (Objects.nonNull(firstDateInInterval) && Objects.nonNull(secondDateInInterval) && Objects.nonNull(firsrDateInIntervalToCompare) && Objects.nonNull(secondDateInIntervalToCompare)) {
-            return beforeOrEquals(secondDateInIntervalToCompare, firstDateInInterval) && afterOrEquals(firsrDateInIntervalToCompare, secondDateInInterval);
+    public static boolean datesIntervalsOverlaps(Date firstDateInInterval, Date secondDateInInterval, Date firsrDateInIntervalToCompare, Date secondDateInIntervalToCompare) {
+        if (Objects.allNotNull(firstDateInInterval, secondDateInInterval, firsrDateInIntervalToCompare, secondDateInIntervalToCompare)) {
+            return Intervals.overlaps(Intervals.getInterval(firstDateInInterval, secondDateInInterval), Intervals.getInterval(firsrDateInIntervalToCompare, secondDateInIntervalToCompare));
         } else {
             return false;
         }

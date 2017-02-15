@@ -108,4 +108,49 @@ public class IntervalsTest {
         assertEquals(Numbers.ONE, intervals.size());
     }
     
+    @Test
+    public void testOverlap() {
+        DateTime compareFromDate = new DateTime(2017, 2, 1, 12, 0, 0);
+        DateTime compareUntilDate = new DateTime(2017, 2, 10, 12, 0, 0);
+        
+        Interval compareInterval = Intervals.getInterval(compareFromDate, compareUntilDate);
+        assertNotNull(compareInterval);
+        System.out.println(compareInterval);
+        
+        DateTime fromDate = new DateTime(2017, 1, 1, 12, 0, 0);
+        DateTime untilDate = new DateTime(2017, 2, 1, 12, 0, 0);
+        Interval interval = Intervals.getInterval(fromDate, untilDate);
+        assertFalse(Intervals.overlaps(interval, compareInterval));
+        
+        fromDate = new DateTime(2017, 2, 10, 12, 0, 0);
+        untilDate = new DateTime(2017, 2, 20, 12, 0, 0);
+        interval = Intervals.getInterval(fromDate, untilDate);
+        assertFalse(Intervals.overlaps(interval, compareInterval));
+        
+        fromDate = new DateTime(2017, 1, 1, 12, 0, 0);
+        untilDate = new DateTime(2017, 2, 1, 12, 0, 1);
+        interval = Intervals.getInterval(fromDate, untilDate);
+        assertTrue(Intervals.overlaps(interval, compareInterval));
+        
+        fromDate = new DateTime(2017, 2, 10, 11, 0, 50);
+        untilDate = new DateTime(2017, 2, 20, 12, 0, 0);
+        interval = Intervals.getInterval(fromDate, untilDate);
+        assertTrue(Intervals.overlaps(interval, compareInterval));
+        
+        fromDate = new DateTime(2017, 1, 1, 12, 0, 0);
+        untilDate = new DateTime(2017, 2, 8, 12, 0, 0);
+        interval = Intervals.getInterval(fromDate, untilDate);
+        assertTrue(Intervals.overlaps(interval, compareInterval));
+        
+        fromDate = new DateTime(2017, 2, 2, 13, 0, 0);
+        untilDate = new DateTime(2017, 2, 8, 12, 0, 0);
+        interval = Intervals.getInterval(fromDate, untilDate);
+        assertTrue(Intervals.overlaps(interval, compareInterval));
+        
+        fromDate = new DateTime(2017, 2, 8, 11, 0, 50);
+        untilDate = new DateTime(2017, 2, 20, 12, 0, 0);
+        interval = Intervals.getInterval(fromDate, untilDate);
+        assertTrue(Intervals.overlaps(interval, compareInterval));
+    }
+    
 }
