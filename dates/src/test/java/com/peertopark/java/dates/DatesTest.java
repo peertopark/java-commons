@@ -631,49 +631,48 @@ public class DatesTest {
 
     @Test
     public void testCheckIfDatesIntervalCollisionBetweenAnotherInterval() throws ParseException {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+        Date firstDateInIntervalToCompare = dateFormat.parse("05-01-2016 00:00:00");
+        Date secondDateInIntervalToCompare = dateFormat.parse("10-01-2016 00:00:00");
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-        Date firstDateInIntervalToCompare = dateFormat.parse("05-01-2016");
-        Date secondDateInIntervalToCompare = dateFormat.parse("10-01-2016");
+        assertFalse(Dates.datesIntervalsOverlaps(null, null, null, null));
+        assertFalse(Dates.datesIntervalsOverlaps(null, null, firstDateInIntervalToCompare, secondDateInIntervalToCompare));
 
-        assertFalse(Dates.checkIfDatesIntervalCollisionAnotherInterval(null, null, null, null));
-        assertFalse(Dates.checkIfDatesIntervalCollisionAnotherInterval(null, null, firstDateInIntervalToCompare, secondDateInIntervalToCompare));
+        Date firstDateInInterval = dateFormat.parse("01-01-2016 00:00:00");
+        Date secondDateInInterval = dateFormat.parse("04-01-2016 00:00:00");
+        assertFalse(Dates.datesIntervalsOverlaps(firstDateInInterval, secondDateInInterval, firstDateInIntervalToCompare, secondDateInIntervalToCompare));
 
-        Date firstDateInInterval = dateFormat.parse("01-01-2016");
-        Date secondDateInInterval = dateFormat.parse("04-01-2016");
-        assertFalse(Dates.checkIfDatesIntervalCollisionAnotherInterval(firstDateInInterval, secondDateInInterval, firstDateInIntervalToCompare, secondDateInIntervalToCompare));
+        firstDateInInterval = dateFormat.parse("11-01-2016 00:00:00");
+        secondDateInInterval = dateFormat.parse("14-01-2016 00:00:00");
+        assertFalse(Dates.datesIntervalsOverlaps(firstDateInInterval, secondDateInInterval, firstDateInIntervalToCompare, secondDateInIntervalToCompare));
 
-        firstDateInInterval = dateFormat.parse("11-01-2016");
-        secondDateInInterval = dateFormat.parse("14-01-2016");
-        assertFalse(Dates.checkIfDatesIntervalCollisionAnotherInterval(firstDateInInterval, secondDateInInterval, firstDateInIntervalToCompare, secondDateInIntervalToCompare));
+        firstDateInInterval = dateFormat.parse("01-01-2016 00:00:00");
+        secondDateInInterval = dateFormat.parse("05-01-2016 00:00:00");
+        assertFalse(Dates.datesIntervalsOverlaps(firstDateInInterval, secondDateInInterval, firstDateInIntervalToCompare, secondDateInIntervalToCompare));
 
-        firstDateInInterval = dateFormat.parse("01-01-2016");
-        secondDateInInterval = dateFormat.parse("05-01-2016");
-        assertTrue(Dates.checkIfDatesIntervalCollisionAnotherInterval(firstDateInInterval, secondDateInInterval, firstDateInIntervalToCompare, secondDateInIntervalToCompare));
+        firstDateInInterval = dateFormat.parse("10-01-2016 00:00:00");
+        secondDateInInterval = dateFormat.parse("14-01-2016 00:00:00");
+        assertFalse(Dates.datesIntervalsOverlaps(firstDateInInterval, secondDateInInterval, firstDateInIntervalToCompare, secondDateInIntervalToCompare));
 
-        firstDateInInterval = dateFormat.parse("10-01-2016");
-        secondDateInInterval = dateFormat.parse("14-01-2016");
-        assertTrue(Dates.checkIfDatesIntervalCollisionAnotherInterval(firstDateInInterval, secondDateInInterval, firstDateInIntervalToCompare, secondDateInIntervalToCompare));
+        firstDateInInterval = dateFormat.parse("01-01-2016 00:00:00");
+        secondDateInInterval = dateFormat.parse("08-01-2016 00:00:00");
+        assertTrue(Dates.datesIntervalsOverlaps(firstDateInInterval, secondDateInInterval, firstDateInIntervalToCompare, secondDateInIntervalToCompare));
 
-        firstDateInInterval = dateFormat.parse("01-01-2016");
-        secondDateInInterval = dateFormat.parse("08-01-2016");
-        assertTrue(Dates.checkIfDatesIntervalCollisionAnotherInterval(firstDateInInterval, secondDateInInterval, firstDateInIntervalToCompare, secondDateInIntervalToCompare));
+        firstDateInInterval = dateFormat.parse("08-01-2016 00:00:00");
+        secondDateInInterval = dateFormat.parse("14-01-2016 00:00:00");
+        assertTrue(Dates.datesIntervalsOverlaps(firstDateInInterval, secondDateInInterval, firstDateInIntervalToCompare, secondDateInIntervalToCompare));
 
-        firstDateInInterval = dateFormat.parse("08-01-2016");
-        secondDateInInterval = dateFormat.parse("14-01-2016");
-        assertTrue(Dates.checkIfDatesIntervalCollisionAnotherInterval(firstDateInInterval, secondDateInInterval, firstDateInIntervalToCompare, secondDateInIntervalToCompare));
+        firstDateInInterval = dateFormat.parse("06-01-2016 00:00:00");
+        secondDateInInterval = dateFormat.parse("09-01-2016 00:00:00");
+        assertTrue(Dates.datesIntervalsOverlaps(firstDateInInterval, secondDateInInterval, firstDateInIntervalToCompare, secondDateInIntervalToCompare));
 
-        firstDateInInterval = dateFormat.parse("06-01-2016");
-        secondDateInInterval = dateFormat.parse("09-01-2016");
-        assertTrue(Dates.checkIfDatesIntervalCollisionAnotherInterval(firstDateInInterval, secondDateInInterval, firstDateInIntervalToCompare, secondDateInIntervalToCompare));
+        firstDateInInterval = dateFormat.parse("05-01-2016 00:00:00");
+        secondDateInInterval = dateFormat.parse("10-01-2016 00:00:00");
+        assertTrue(Dates.datesIntervalsOverlaps(firstDateInInterval, secondDateInInterval, firstDateInIntervalToCompare, secondDateInIntervalToCompare));
 
-        firstDateInInterval = dateFormat.parse("05-01-2016");
-        secondDateInInterval = dateFormat.parse("10-01-2016");
-        assertTrue(Dates.checkIfDatesIntervalCollisionAnotherInterval(firstDateInInterval, secondDateInInterval, firstDateInIntervalToCompare, secondDateInIntervalToCompare));
-
-        firstDateInInterval = dateFormat.parse("01-01-2016");
-        secondDateInInterval = dateFormat.parse("14-01-2016");
-        assertTrue(Dates.checkIfDatesIntervalCollisionAnotherInterval(firstDateInInterval, secondDateInInterval, firstDateInIntervalToCompare, secondDateInIntervalToCompare));
+        firstDateInInterval = dateFormat.parse("01-01-2016 00:00:00");
+        secondDateInInterval = dateFormat.parse("14-01-2016 00:00:00");
+        assertTrue(Dates.datesIntervalsOverlaps(firstDateInInterval, secondDateInInterval, firstDateInIntervalToCompare, secondDateInIntervalToCompare));
     }
 
 }

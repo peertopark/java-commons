@@ -15,6 +15,7 @@
  */
 package com.peertopark.java.dates;
 
+import com.peertopark.java.commons.utilities.Objects;
 import static com.peertopark.java.dates.Dates.convert;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -55,6 +56,14 @@ public class Intervals {
             intervals.add(getInterval(startMillis, endMillis));
         }
         return intervals;
+    }
+    
+    public static boolean overlaps(Interval interval, Interval toCompare) {
+        if (Objects.allNotNull(toCompare, interval)) {
+            return toCompare.overlaps(interval);
+        } else {
+            return false;
+        }
     }
 
 }
