@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.peertopark.java</groupId>
         <artifactId>parent</artifactId>
-        <version>3.2.0</version>
+        <version>3.2.1</version>
     </parent>
     <artifactId>validators</artifactId>
     <packaging>jar</packaging>
