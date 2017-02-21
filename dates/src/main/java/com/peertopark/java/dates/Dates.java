@@ -86,14 +86,30 @@ public class Dates {
     /**
      * Transforma un Date en un String con el valor Long del Date.
      *
-     * @param fecha Date
+     * @param date Date
      * @return String
      */
-    public static String transformDateToLongString(Date fecha) {
-        if (Objects.isNull(fecha)) {
+    public static String toLongString(Date date) {
+        if (Objects.isNull(date)) {
             return null;
         } else {
-            return String.valueOf(fecha.getTime());
+            return String.valueOf(date.getTime());
+        }
+    }
+    
+    public static Long toLongMillis(Date date) {
+        if (Objects.isNull(date)) {
+            return null;
+        } else {
+            return date.getTime();
+        }
+    }
+    
+    public static Long toLongSeconds(Date date) {
+        if (Objects.isNull(date)) {
+            return null;
+        } else {
+            return getSecondsFromMillis(date.getTime());
         }
     }
 

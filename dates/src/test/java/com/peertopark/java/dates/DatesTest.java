@@ -623,7 +623,7 @@ public class DatesTest {
         Date date = Dates.from(fromLong);
         assertNotNull(date);
         
-        String dateLongString = Dates.transformDateToLongString(date);
+        String dateLongString = Dates.toLongString(date);
         Date resultDate = Dates.from(dateLongString);
         assertNotNull(resultDate);
         assertEquals(date, resultDate);
@@ -673,6 +673,25 @@ public class DatesTest {
         firstDateInInterval = dateFormat.parse("01-01-2016 00:00:00");
         secondDateInInterval = dateFormat.parse("14-01-2016 00:00:00");
         assertTrue(Dates.datesIntervalsOverlaps(firstDateInInterval, secondDateInInterval, firstDateInIntervalToCompare, secondDateInIntervalToCompare));
+    }
+    
+    
+    @Test
+    public void testToLongMillis() {
+        Date date = Dates.now();
+        assertNotNull(date);
+        long dateLong = Dates.toLongMillis(date);
+        assertNotNull(dateLong);
+        assertEquals(date.getTime(), dateLong);
+    }
+    
+    @Test
+    public void testToLongSeconds() {
+        Date date = Dates.now();
+        assertNotNull(date);
+        long dateLong = Dates.toLongSeconds(date);
+        assertNotNull(dateLong);
+        assertEquals(Dates.getSecondsFromMillis(date.getTime()), dateLong);
     }
 
 }
