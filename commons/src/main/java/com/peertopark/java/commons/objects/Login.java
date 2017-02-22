@@ -160,7 +160,7 @@ public class Login implements LoginInterface {
     }
     
     private String buildAuthString() {
-        if (Strings.checkIfIsNotEmptyOrNull(user) && Strings.checkIfIsNotEmptyOrNull(passwd)) {
+        if (Strings.isNotEmptyOrNull(user) && Strings.isNotEmptyOrNull(passwd)) {
             return String.format(AUTHSTRINGCONSTRUCTOR, user, passwd);
         } else {
             return ":";
