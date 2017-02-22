@@ -28,8 +28,6 @@ import static org.junit.Assert.*;
  */
 public class StringsTest {
     
-    public StringsTest() {
-    }
     
     @BeforeClass
     public static void setUpClass() {
@@ -46,32 +44,33 @@ public class StringsTest {
     @After
     public void tearDown() {
     }
-
+    
     /**
-     * Test of checkIfIsEmptyOrNull method, of class Strings.
+     * Test of isEmptyOrNull method, of class Strings.
      */
     @Test
-    public void testCheckIfIsEmptyOrNull() {
+    public void testIsEmptyOrNull() {
         String test = "Pepe";
-        assertFalse(Strings.checkIfIsEmptyOrNull(test));
+        assertFalse(Strings.isEmptyOrNull(test));
         test = "";
-        assertTrue(Strings.checkIfIsEmptyOrNull(test));
+        assertTrue(Strings.isEmptyOrNull(test));
         test = null;
-        assertTrue(Strings.checkIfIsEmptyOrNull(test));
+        assertTrue(Strings.isEmptyOrNull(test));
     }
 
     /**
-     * Test of checkIfIsNotEmptyOrNull method, of class Strings.
+     * Test of isNotEmptyOrNull method, of class Strings.
      */
     @Test
-    public void testCheckIfIsNotEmptyOrNull() {
+    public void testIsNotEmptyOrNull() {
         String test = "Pepe";
-        assertTrue(Strings.checkIfIsNotEmptyOrNull(test));
+        assertTrue(Strings.isNotEmptyOrNull(test));
         test = "";
-        assertFalse(Strings.checkIfIsNotEmptyOrNull(test));
+        assertFalse(Strings.isNotEmptyOrNull(test));
         test = null;
-        assertFalse(Strings.checkIfIsNotEmptyOrNull(test));
+        assertFalse(Strings.isNotEmptyOrNull(test));
     }
+    
     
     
     @Test

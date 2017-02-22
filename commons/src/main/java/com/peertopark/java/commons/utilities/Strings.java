@@ -25,27 +25,46 @@ public class Strings {
 
     /**
      * Check if string is null or empty
-     *
+     * @deprecated
      * @param string The string
      * @return boolean
      */
     public static boolean checkIfIsEmptyOrNull(String string) {
         return Objects.isNull(string) || string.isEmpty();
-
+    }
+    
+    /**
+     * Check if string is null or empty
+     * @param string The string
+     * @return boolean
+     */
+    public static boolean isEmptyOrNull(String string) {
+        return Objects.isNull(string) || string.isEmpty();
     }
 
+    /**
+     * Check if string is not null and not empty
+     * @deprecated
+     * @param string The string
+     * @return boolean
+     */
+    public static boolean checkIfIsNotEmptyOrNull(String string) {
+        return !Strings.isEmptyOrNull(string);
+    }
+    
+    
     /**
      * Check if string is not null and not empty
      *
      * @param string The string
      * @return boolean
      */
-    public static boolean checkIfIsNotEmptyOrNull(String string) {
-        return !Strings.checkIfIsEmptyOrNull(string);
+    public static boolean isNotEmptyOrNull(String string) {
+        return !Strings.isEmptyOrNull(string);
     }
 
     public static String capitalize(String string) {
-        if (Strings.checkIfIsEmptyOrNull(string)) {
+        if (Strings.isEmptyOrNull(string)) {
             return string;
         } else {
             return string.substring(0, 1).toUpperCase() + string.substring(1).toLowerCase();
@@ -53,7 +72,7 @@ public class Strings {
     }
 
     public static String getFirstLetter(String string) {
-        if (Strings.checkIfIsEmptyOrNull(string)) {
+        if (Strings.isEmptyOrNull(string)) {
             return string;
         } else {
             return string.substring(0, 1);
@@ -61,7 +80,7 @@ public class Strings {
     }
 
     public static String getCapitalizeFirstLetter(String string) {
-        if (Strings.checkIfIsEmptyOrNull(string)) {
+        if (Strings.isEmptyOrNull(string)) {
             return string;
         } else {
             return getFirstLetter(string).toUpperCase();
@@ -69,7 +88,7 @@ public class Strings {
     }
 
     public static String removeStringInString(String string, String remove) {
-        if (Strings.checkIfIsEmptyOrNull(string)) {
+        if (Strings.isEmptyOrNull(string)) {
             return string;
         } else {
             return string.replaceAll(remove, EMPTY);
