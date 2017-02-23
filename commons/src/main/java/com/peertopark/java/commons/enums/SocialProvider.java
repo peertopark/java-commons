@@ -22,7 +22,7 @@ import com.peertopark.java.commons.utilities.Objects;
  * @author hector
  */
 public enum SocialProvider {
-    FACEBOOK("facebook");
+    FACEBOOK("facebook"), GOOGLE("google");
 
     private final String value;
 
