@@ -31,4 +31,9 @@ public enum HttpCode {
     public int getValue() {
         return value;
     }
+    
+    public boolean equals(int value) {
+        return this.value == value;
+    }
+
 }
