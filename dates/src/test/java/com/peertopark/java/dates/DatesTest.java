@@ -15,10 +15,13 @@
  */
 package com.peertopark.java.dates;
 
+import com.peertopark.java.commons.utilities.Numbers;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeConstants;
 import org.joda.time.DateTimeZone;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -133,28 +136,34 @@ public class DatesTest {
         Date fromDate = dateFormat.parse("05-01-2016 00:00");
         Date untilDate = dateFormat.parse("03-01-2016 00:00");
         assertTrue(Dates.afterOrEquals(untilDate, fromDate));
+        assertFalse(Dates.notAfterOrEquals(untilDate, fromDate));
 
         fromDate = dateFormat.parse("04-01-2016 00:00");
         untilDate = dateFormat.parse("07-02-2016 00:00");
         assertFalse(Dates.afterOrEquals(untilDate, fromDate));
+        assertTrue(Dates.notAfterOrEquals(untilDate, fromDate));
 
         fromDate = dateFormat.parse("05-01-2016 00:00");
         untilDate = dateFormat.parse("05-01-2016 00:00");
         assertTrue(Dates.afterOrEquals(untilDate, fromDate));
+        assertFalse(Dates.notAfterOrEquals(untilDate, fromDate));
 
         DateTimeFormatter dateTimeFormat = DateTimeFormat.forPattern("dd-MM-yyyy HH:mm");
 
         DateTime fromDateTime = dateTimeFormat.parseDateTime("05-01-2016 00:00");
         DateTime untilDateTime = dateTimeFormat.parseDateTime("03-01-2016 00:00");
         assertTrue(Dates.afterOrEquals(untilDateTime, fromDateTime));
+        assertFalse(Dates.notAfterOrEquals(untilDateTime, fromDateTime));
 
         fromDateTime = dateTimeFormat.parseDateTime("04-01-2016 00:00");
         untilDateTime = dateTimeFormat.parseDateTime("07-02-2016 00:00");
         assertFalse(Dates.afterOrEquals(untilDateTime, fromDateTime));
+        assertTrue(Dates.notAfterOrEquals(untilDateTime, fromDateTime));
 
         fromDateTime = dateTimeFormat.parseDateTime("05-01-2016 00:00");
         untilDateTime = dateTimeFormat.parseDateTime("05-01-2016 00:00");
         assertTrue(Dates.afterOrEquals(untilDateTime, fromDateTime));
+        assertFalse(Dates.notAfterOrEquals(untilDateTime, fromDateTime));
     }
 
     @Test
@@ -164,27 +173,33 @@ public class DatesTest {
         Date fromDate = dateFormat.parse("05-01-2016 00:00");
         Date untilDate = dateFormat.parse("03-01-2016 00:00");
         assertTrue(Dates.after(untilDate, fromDate));
+        assertFalse(Dates.notAfter(untilDate, fromDate));
 
         fromDate = dateFormat.parse("04-01-2016 00:00");
         untilDate = dateFormat.parse("07-02-2016 00:00");
         assertFalse(Dates.after(untilDate, fromDate));
+        assertTrue(Dates.notAfter(untilDate, fromDate));
 
         fromDate = dateFormat.parse("05-01-2016 00:00");
         untilDate = dateFormat.parse("05-01-2016 00:00");
         assertFalse(Dates.after(untilDate, fromDate));
+        assertTrue(Dates.notAfter(untilDate, fromDate));
 
         DateTimeFormatter dateTimeFormat = DateTimeFormat.forPattern("dd-MM-yyyy HH:mm");
         DateTime fromDateTime = dateTimeFormat.parseDateTime("05-01-2016 00:00");
         DateTime untilDateTime = dateTimeFormat.parseDateTime("03-01-2016 00:00");
         assertTrue(Dates.after(untilDateTime, fromDateTime));
+        assertFalse(Dates.notAfter(untilDateTime, fromDateTime));
 
         fromDateTime = dateTimeFormat.parseDateTime("04-01-2016 00:00");
         untilDateTime = dateTimeFormat.parseDateTime("07-02-2016 00:00");
         assertFalse(Dates.after(untilDateTime, fromDateTime));
+        assertTrue(Dates.notAfter(untilDateTime, fromDateTime));
 
         fromDateTime = dateTimeFormat.parseDateTime("05-01-2016 00:00");
         untilDateTime = dateTimeFormat.parseDateTime("05-01-2016 00:00");
         assertFalse(Dates.after(untilDateTime, fromDateTime));
+        assertTrue(Dates.notAfter(untilDateTime, fromDateTime));
     }
 
     @Test
@@ -692,6 +707,16 @@ public class DatesTest {
         long dateLong = Dates.toLongSeconds(date);
         assertNotNull(dateLong);
         assertEquals(Dates.getSecondsFromMillis(date.getTime()), dateLong);
+    }
+    
+    
+    @Test
+    public void daysOfWeekInDateIntervalTest() {    
+        DateTime startDate = Dates.build(2017, 1, 1);   
+        DateTime endDate = Dates.build(2017, 1, 15);    
+        List<DateTime> resultList = Dates.daysOfWeekInDateInterval(startDate, endDate, DateTimeConstants.FRIDAY);
+        assertNotNull(resultList);
+        assertEquals(Numbers.TWO, resultList.size());
     }
 
 }

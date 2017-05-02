@@ -18,7 +18,9 @@ package com.peertopark.java.dates;
 import com.peertopark.java.commons.utilities.Numbers;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeConstants;
 import org.joda.time.DateTimeZone;
 import org.joda.time.Duration;
 import org.joda.time.Interval;
@@ -115,7 +117,6 @@ public class IntervalsTest {
         
         Interval compareInterval = Intervals.getInterval(compareFromDate, compareUntilDate);
         assertNotNull(compareInterval);
-        System.out.println(compareInterval);
         
         DateTime fromDate = new DateTime(2017, 1, 1, 12, 0, 0);
         DateTime untilDate = new DateTime(2017, 2, 1, 12, 0, 0);
@@ -151,6 +152,16 @@ public class IntervalsTest {
         untilDate = new DateTime(2017, 2, 20, 12, 0, 0);
         interval = Intervals.getInterval(fromDate, untilDate);
         assertTrue(Intervals.overlaps(interval, compareInterval));
+    }
+    
+    @Test
+    public void daysOfWeekTest() {    
+        DateTime startDate = Dates.build(2017, 1, 1);   
+        DateTime endDate = Dates.build(2017, 1, 15);  
+        Interval interval = Intervals.getInterval(startDate, endDate);
+        List<DateTime> resultList = Intervals.daysOfWeek(interval, DateTimeConstants.FRIDAY);
+        assertNotNull(resultList);
+        assertEquals(Numbers.TWO, resultList.size());
     }
     
 }
