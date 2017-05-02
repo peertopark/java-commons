@@ -77,5 +77,11 @@ public class Intervals {
     public static List<DateTime> daysOfWeek(Interval interval, int dayOfWeek) {
         return Dates.daysOfWeekInDateInterval(interval.getStart(), interval.getEnd(), dayOfWeek);
     }
+    
+    
+    public static boolean haveDayOfWeek(Interval interval, int dayOfWeek) {
+        List<DateTime> list = daysOfWeek(interval, dayOfWeek);
+        return !list.isEmpty();
+    }
 
 }

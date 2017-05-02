@@ -164,4 +164,18 @@ public class IntervalsTest {
         assertEquals(Numbers.TWO, resultList.size());
     }
     
+    
+    @Test
+    public void haveDayOfWeekTest() {   
+        DateTime startDate = Dates.build(2017, 1, 1);   
+        DateTime endDate = Dates.build(2017, 1, 5);  
+        Interval interval = Intervals.getInterval(startDate, endDate);
+        assertFalse(Intervals.haveDayOfWeek(interval, DateTimeConstants.FRIDAY));
+        
+
+        endDate = Dates.build(2017, 1, 15);  
+        interval = Intervals.getInterval(startDate, endDate);
+        assertTrue(Intervals.haveDayOfWeek(interval, DateTimeConstants.FRIDAY));
+    }
+    
 }
