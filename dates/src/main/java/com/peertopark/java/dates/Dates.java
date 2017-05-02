@@ -17,10 +17,13 @@ package com.peertopark.java.dates;
 
 import com.peertopark.java.commons.utilities.Numbers;
 import com.peertopark.java.commons.utilities.Objects;
+import com.peertopark.java.dates.iterators.DayOfWeekIterator;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.TimeZone;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.time.DateUtils;
@@ -59,6 +62,31 @@ public class Dates {
      */
     public static Date now() {
         return new Date();
+    }
+    
+    
+    /**
+     * Constructs an instance from datetime field values using ISOChronology in the default time zone.
+     * @param year
+     * @param monthOfYear
+     * @param dayOfMonth
+     * @return {@link DateTime} 
+     */
+    public static DateTime build(int year, int monthOfYear, int dayOfMonth) {
+        return new DateTime(year, monthOfYear, dayOfMonth, Numbers.ZERO, Numbers.ZERO);
+    }
+    
+    /**
+     * Constructs an instance from datetime field values using ISOChronology in the default time zone.
+     * @param year
+     * @param monthOfYear
+     * @param dayOfMonth
+     * @param hourOfDay
+     * @param minuteOfHour
+     * @return {@link DateTime} 
+     */
+    public static DateTime build(int year, int monthOfYear, int dayOfMonth, int hourOfDay, int minuteOfHour) {
+        return new DateTime(year, monthOfYear, dayOfMonth, hourOfDay, minuteOfHour);
     }
 
     public static DateTime convert(Date date) {
@@ -178,6 +206,26 @@ public class Dates {
             return false;
         }
     }
+    
+    /**
+     * Date is not after date
+     * @param dateToCompare {@link Date} Date to compare
+     * @param date {@link Date} Date
+     * @return True if date is not after date 
+     */
+    public static boolean notAfterOrEquals(Date dateToCompare, Date date) {
+        return !afterOrEquals(dateToCompare, date);
+    }
+    
+    /**
+     * Date is not after date
+     * @param dateToCompare {@link DateTime} Date to compare
+     * @param date {@link DateTime} Date
+     * @return True if date is not after date 
+     */
+    public static boolean notAfterOrEquals(DateTime dateToCompare, DateTime date) {
+        return !afterOrEquals(dateToCompare, date);
+    }
 
     public static boolean after(Date dateToCompare, Date date) {
         return after(convert(dateToCompare), convert(date));
@@ -189,6 +237,27 @@ public class Dates {
         } else {
             return false;
         }
+    }
+    
+    
+    /**
+     * Date is not after date
+     * @param dateToCompare {@link Date} Date to compare
+     * @param date {@link Date} Date
+     * @return True if date is not after date 
+     */
+    public static boolean notAfter(Date dateToCompare, Date date) {
+        return !after(dateToCompare, date);
+    }
+    
+    /**
+     * Date is not after date
+     * @param dateToCompare {@link DateTime} Date to compare
+     * @param date {@link DateTime} Date
+     * @return True if date is not after date 
+     */
+    public static boolean notAfter(DateTime dateToCompare, DateTime date) {
+        return !after(dateToCompare, date);
     }
 
     public static boolean beforeOrEquals(Date dateToCompare, Date date) {
@@ -479,6 +548,23 @@ public class Dates {
         } else {
             return false;
         }
+    }
+    
+    
+    /**
+     * Get a list of DateTime with the days of week in a datetime interval
+     * @param startDate
+     * @param endDate
+     * @param dayOfWeek
+     * @return List of DateTime
+     */
+    public static List<DateTime> daysOfWeekInDateInterval(DateTime startDate, DateTime endDate, int dayOfWeek) {
+        List<DateTime> daysOfWeek = new ArrayList<DateTime>();
+        DayOfWeekIterator iterator = DayOfWeekIterator.build(startDate, endDate, dayOfWeek);
+        while (iterator.hasNext()) {
+            daysOfWeek.add(iterator.next());
+        }
+        return daysOfWeek;
     }
 
 }

@@ -20,6 +20,7 @@ import static com.peertopark.java.dates.Dates.convert;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.joda.time.Interval;
@@ -64,6 +65,23 @@ public class Intervals {
         } else {
             return false;
         }
+    }
+    
+    
+    /**
+     * Get a list of DateTime with the days of week in a datetime interval
+     * @param interval
+     * @param dayOfWeek
+     * @return List of DateTime
+     */
+    public static List<DateTime> daysOfWeek(Interval interval, int dayOfWeek) {
+        return Dates.daysOfWeekInDateInterval(interval.getStart(), interval.getEnd(), dayOfWeek);
+    }
+    
+    
+    public static boolean haveDayOfWeek(Interval interval, int dayOfWeek) {
+        List<DateTime> list = daysOfWeek(interval, dayOfWeek);
+        return !list.isEmpty();
     }
 
 }
