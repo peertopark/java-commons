@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.peertopark.java</groupId>
         <artifactId>parent</artifactId>
-        <version>3.4.0</version>
+        <version>3.5.0</version>
     </parent>
     <artifactId>dates</artifactId>
     <name>${project.groupId}.${project.artifactId}</name>
@@ -25,12 +25,12 @@
         <dependency>
             <groupId>joda-time</groupId>
             <artifactId>joda-time</artifactId>
-            <version>2.9.7</version>
+            <version>${joda-time.joda-time.version}</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.12</version>
+            <version>${junit.junit.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

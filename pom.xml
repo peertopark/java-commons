@@ -3,11 +3,18 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.peertopark.java</groupId>
     <artifactId>parent</artifactId>
-    <version>3.4.0</version>
+    <version>3.5.0</version>
     <packaging>pom</packaging>
     <name>${project.groupId}.${project.artifactId}</name>
     <description>Peer to Park Java Open Source parent package</description>
     <url>https://www.peertopark.com/</url>
+    <properties>
+        <joda-time.joda-time.version>2.9.9</joda-time.joda-time.version>
+        <junit.junit.version>4.12</junit.junit.version>
+        <com.googlecode.libphonenumber.libphonenumber.version>8.4.2</com.googlecode.libphonenumber.libphonenumber.version>
+        <org.glassfish.jersey.core.jersey-client.version>2.25.1</org.glassfish.jersey.core.jersey-client.version>
+        <commons-validator.commons-validator.version>1.6</commons-validator.commons-validator.version>
+    </properties>
     <scm>
         <connection>scm:git:git://github.com/peertopark/java-commons.git</connection>
         <developerConnection>scm:git:ssh://github.com:peertopark/java-commons.git</developerConnection>
