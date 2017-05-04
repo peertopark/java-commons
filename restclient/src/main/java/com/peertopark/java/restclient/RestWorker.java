@@ -5,6 +5,8 @@
  */
 package com.peertopark.java.restclient;
 
+import com.peertopark.java.commons.objects.Worker;
+
 /**
  *
  * @author hector

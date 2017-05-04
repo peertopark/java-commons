@@ -3,13 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.peertopark.java.restclient;
+package com.peertopark.java.commons.objects;
 
 /**
  *
  * @author hector
  */
 public abstract class Worker extends Thread {
+    
+    
     @Override
     public void run() {
         makeWork();
