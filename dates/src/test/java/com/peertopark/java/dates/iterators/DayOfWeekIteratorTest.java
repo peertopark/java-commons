@@ -15,6 +15,7 @@
  */
 package com.peertopark.java.dates.iterators;
 
+import com.peertopark.java.commons.utilities.Numbers;
 import com.peertopark.java.dates.Dates;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeConstants;
@@ -52,20 +53,32 @@ public class DayOfWeekIteratorTest {
      */
     @Test
     public void testHasNext() {
-        DateTime startDate = Dates.build(2017, 1, 1);   
-        DateTime endDate = Dates.build(2017, 1, 8);      
+        DateTime startDate = Dates.build(2017, 5, 1);   
+        DateTime endDate = Dates.build(2017, 5, 8);      
         DayOfWeekIterator iterator = DayOfWeekIterator.build(startDate, endDate, DateTimeConstants.FRIDAY);
         assertTrue(iterator.hasNext());
         
-        endDate = Dates.build(2017, 1, 5);      
+        endDate = Dates.build(2017, 5, 4, 0, 0);  
         iterator = DayOfWeekIterator.build(startDate, endDate, DateTimeConstants.FRIDAY);
         assertFalse(iterator.hasNext());
         
-        endDate = Dates.build(2017, 1, 6);      
+        endDate = Dates.build(2017, 5, 4, 23, 59);  
         iterator = DayOfWeekIterator.build(startDate, endDate, DateTimeConstants.FRIDAY);
         assertFalse(iterator.hasNext());
         
-        endDate = Dates.build(2017, 1, 6, 12, 0);      
+        endDate = Dates.build(2017, 5, 5, 0, 0);  
+        iterator = DayOfWeekIterator.build(startDate, endDate, DateTimeConstants.FRIDAY);
+        assertFalse(iterator.hasNext());
+        
+        endDate = Dates.build(2017, 5, 5, 0, 0).plusMillis(Numbers.ONE);  
+        iterator = DayOfWeekIterator.build(startDate, endDate, DateTimeConstants.FRIDAY);
+        assertTrue(iterator.hasNext());
+        
+        endDate = Dates.build(2017, 5, 5, 0, 10);      
+        iterator = DayOfWeekIterator.build(startDate, endDate, DateTimeConstants.FRIDAY);
+        assertTrue(iterator.hasNext());
+        
+        endDate = Dates.build(2017, 5, 6);      
         iterator = DayOfWeekIterator.build(startDate, endDate, DateTimeConstants.FRIDAY);
         assertTrue(iterator.hasNext());
         
@@ -78,6 +91,51 @@ public class DayOfWeekIteratorTest {
         endDate = Dates.build(2017, 1, 8);      
         iterator = DayOfWeekIterator.build(startDate, endDate, DateTimeConstants.FRIDAY);
         assertTrue(iterator.hasNext());
+        
+        startDate = Dates.build(2017, 5, 19, 0, 0);   
+        endDate = Dates.build(2017, 5, 20, 0, 0);   
+        iterator = DayOfWeekIterator.build(startDate, endDate, DateTimeConstants.FRIDAY);
+        assertTrue(iterator.hasNext());
+        
+        startDate = Dates.build(2017, 5, 19, 10, 0);   
+        endDate = Dates.build(2017, 5, 20, 10, 0);   
+        iterator = DayOfWeekIterator.build(startDate, endDate, DateTimeConstants.FRIDAY);
+        assertTrue(iterator.hasNext());
+        
+        startDate = Dates.build(2017, 5, 18, 0, 0);   
+        endDate = Dates.build(2017, 5, 19, 0, 0);   
+        iterator = DayOfWeekIterator.build(startDate, endDate, DateTimeConstants.FRIDAY);
+        assertFalse(iterator.hasNext());
+        
+        startDate = Dates.build(2017, 5, 18, 0, 0);   
+        endDate = Dates.build(2017, 5, 19, 0, 10);   
+        iterator = DayOfWeekIterator.build(startDate, endDate, DateTimeConstants.FRIDAY);
+        assertTrue(iterator.hasNext());
+        
+        startDate = Dates.build(2017, 5, 18, 0, 10);   
+        endDate = Dates.build(2017, 5, 19, 0, 10);   
+        iterator = DayOfWeekIterator.build(startDate, endDate, DateTimeConstants.FRIDAY);
+        assertTrue(iterator.hasNext());
+        
+        startDate = Dates.build(2017, 5, 18, 0, 11);   
+        endDate = Dates.build(2017, 5, 19, 0, 10);   
+        iterator = DayOfWeekIterator.build(startDate, endDate, DateTimeConstants.FRIDAY);
+        assertTrue(iterator.hasNext());
+        
+        startDate = Dates.build(2017, 5, 18, 0, 10);   
+        endDate = Dates.build(2017, 5, 19, 0, 11);   
+        iterator = DayOfWeekIterator.build(startDate, endDate, DateTimeConstants.FRIDAY);
+        assertTrue(iterator.hasNext());
+        
+        startDate = Dates.build(2017, 5, 19, 23, 59);   
+        endDate = Dates.build(2017, 5, 20, 23, 59);   
+        iterator = DayOfWeekIterator.build(startDate, endDate, DateTimeConstants.FRIDAY);
+        assertTrue(iterator.hasNext()); 
+        
+        startDate = Dates.build(2017, 5, 20, 0, 0);   
+        endDate = Dates.build(2017, 5, 20, 23, 59);   
+        iterator = DayOfWeekIterator.build(startDate, endDate, DateTimeConstants.FRIDAY);
+        assertFalse(iterator.hasNext());
     }
 
     /**
