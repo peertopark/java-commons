@@ -20,6 +20,7 @@ import com.peertopark.java.dates.Dates;
 import java.util.Iterator;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
+import org.joda.time.LocalDate;
 
 /**
  *
@@ -28,13 +29,15 @@ import org.joda.time.Interval;
 public class DayOfWeekIterator implements Iterator<DateTime> {
     
     private final DateTime endDate;
+    private final DateTime startDate;
     
-    private DateTime nextDate;
+    private LocalDate nextDate;
     
     public DayOfWeekIterator(DateTime startDate, DateTime endDate, int dayOfWeekToIterate){
-        this.endDate = endDate;
-        nextDate = startDate.withDayOfWeek(dayOfWeekToIterate);
-        if (startDate.getDayOfWeek() > dayOfWeekToIterate) {
+        this.startDate = startDate;
+        this.endDate = endDate; 
+        nextDate = this.startDate.withDayOfWeek(dayOfWeekToIterate).toLocalDate();
+        if (this.startDate.getDayOfWeek() > dayOfWeekToIterate) {
             nextDate = nextDate.plusWeeks(Numbers.ONE);
         }
     }
@@ -54,14 +57,21 @@ public class DayOfWeekIterator implements Iterator<DateTime> {
     
     @Override
     public boolean hasNext() {
-        return Dates.notAfterOrEquals(endDate, nextDate);
+        return Dates.notAfterOrEquals(endDate, nextDate.toDateTimeAtStartOfDay());
     }
 
     @Override
     public DateTime next() {
-        DateTime resultDate = nextDate;
+        DateTime resultDate = nextDate.toDateTimeAtStartOfDay();
         nextDate = nextDate.plusWeeks(Numbers.ONE);
         return resultDate;
     }
+
+    @Override
+    public String toString() {
+        return "DayOfWeekIterator{" + "endDate=" + endDate + ", startDate=" + startDate + ", nextDate=" + nextDate + '}';
+    }
+    
+    
     
 }

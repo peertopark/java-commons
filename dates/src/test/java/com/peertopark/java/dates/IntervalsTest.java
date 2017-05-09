@@ -171,11 +171,30 @@ public class IntervalsTest {
         DateTime endDate = Dates.build(2017, 1, 5);  
         Interval interval = Intervals.getInterval(startDate, endDate);
         assertFalse(Intervals.haveDayOfWeek(interval, DateTimeConstants.FRIDAY));
-        
 
         endDate = Dates.build(2017, 1, 15);  
         interval = Intervals.getInterval(startDate, endDate);
         assertTrue(Intervals.haveDayOfWeek(interval, DateTimeConstants.FRIDAY));
+        
+        startDate = Dates.build(2017, 5, 19, 1, 0);   
+        endDate = Dates.build(2017, 5, 19, 23, 59);  
+        interval = Intervals.getInterval(startDate, endDate);
+        assertFalse(Intervals.haveDayOfWeek(interval, DateTimeConstants.SATURDAY));
+        
+        startDate = Dates.build(2017, 5, 19, 0, 0);   
+        endDate = Dates.build(2017, 5, 20, 0, 0);  
+        interval = Intervals.getInterval(startDate, endDate);
+        assertFalse(Intervals.haveDayOfWeek(interval, DateTimeConstants.SATURDAY));
+        
+        startDate = Dates.build(2017, 5, 19, 0, 0);   
+        endDate = Dates.build(2017, 5, 20, 0, 10);  
+        interval = Intervals.getInterval(startDate, endDate);
+        assertTrue(Intervals.haveDayOfWeek(interval, DateTimeConstants.SATURDAY));
+        
+        startDate = Dates.build(2017, 5, 19, 0, 10);   
+        endDate = Dates.build(2017, 5, 20, 0, 10);  
+        interval = Intervals.getInterval(startDate, endDate);
+        assertTrue(Intervals.haveDayOfWeek(interval, DateTimeConstants.SATURDAY));
     }
     
 }
