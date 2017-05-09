@@ -88,6 +88,32 @@ public class Dates {
     public static DateTime build(int year, int monthOfYear, int dayOfMonth, int hourOfDay, int minuteOfHour) {
         return new DateTime(year, monthOfYear, dayOfMonth, hourOfDay, minuteOfHour);
     }
+    
+    
+    /**
+     * Constructs an instance from datetime field values using ISOChronology in the default time zone.
+     * @param year
+     * @param monthOfYear
+     * @param dayOfMonth
+     * @param hourOfDay
+     * @param minuteOfHour
+     * @return {@link Date} 
+     */
+    public static Date buildDate(int year, int monthOfYear, int dayOfMonth, int hourOfDay, int minuteOfHour) {
+        return from(build(year, monthOfYear, dayOfMonth, hourOfDay, minuteOfHour));
+    }
+    
+    /**
+     * Constructs an instance from datetime field values using ISOChronology in the default time zone.
+     * @param year
+     * @param monthOfYear
+     * @param dayOfMonth
+     * @return {@link Date} 
+     */
+    public static Date buildDate(int year, int monthOfYear, int dayOfMonth) {
+        return buildDate(year, monthOfYear, dayOfMonth, Numbers.ZERO, Numbers.ZERO);
+    }
+    
 
     public static DateTime convert(Date date) {
         if (Objects.isNull(date)) {

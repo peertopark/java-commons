@@ -718,5 +718,21 @@ public class DatesTest {
         assertNotNull(resultList);
         assertEquals(Numbers.TWO, resultList.size());
     }
+    
+    
+    @Test
+    public void buildTest() {  
+        DateTime expected = new DateTime(2017, 1, 18, 12, 30);
+        DateTime result = Dates.build(2017, 1, 18, 12, 30);
+        assertEquals(expected, result);
+    }
+    
+    
+    @Test
+    public void buildDateTest() {  
+        DateTime expected = new DateTime(2017, 1, 18, 12, 30);      
+        Date result = Dates.buildDate(2017, 1, 18, 12, 30);
+        assertEquals(expected.toDate(), result);
+    }
 
 }
